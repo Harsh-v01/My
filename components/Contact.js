@@ -3,16 +3,23 @@ import { useInView } from './useInView'
 
 const links = [
   {
-    label: 'Email',
-    value: 'Say hello',
-    href:  'mailto:contactharsh@gmail.com',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="2" y="4" width="20" height="16" rx="2" />
-        <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-      </svg>
-    ),
-  },
+  label: 'Email',
+  value: 'Say hello',
+  href: 'https://mail.google.com/mail/?view=cm&fs=1&to=contactharsh@gmail.com',
+  icon: (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    >
+      <rect x="2" y="4" width="20" height="16" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  ),
+},
   {
     label: 'LinkedIn',
     value: 'Professional profile',
