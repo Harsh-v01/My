@@ -17,7 +17,7 @@ export default function Hero() {
 
     const checkPortrait = async () => {
       try {
-        const response = await fetch('/harsh.jpg', { method: 'HEAD' })
+        const response = await fetch('/Harsh.jpg', { method: 'HEAD' })
 
         if (!isMounted) return
 
@@ -151,7 +151,7 @@ export default function Hero() {
             >
               {portraitStatus === 'ready' && !portraitError ? (
                 <img
-                  src="/harsh.jpg"
+                  src="/Harsh.jpg"
                   alt="Harsh Kumar"
                   className="w-full h-full object-contain object-top bg-[#F0E5D8]"
                   style={{ filter: 'grayscale(15%) contrast(1.05)' }}
@@ -162,7 +162,7 @@ export default function Hero() {
                   <div className="text-center px-6">
                     <div className="font-display text-6xl font-light text-[#2E4052]">HK</div>
                     <div className="mt-3 font-mono text-[10px] tracking-[0.25em] uppercase text-[#8FA6AC]">
-                      {portraitStatus === 'missing' ? 'harsh.jpg missing' : 'Loading portrait'}
+                      {portraitStatus === 'missing' ? 'Harsh.jpg missing' : 'Loading portrait'}
                     </div>
                   </div>
                 </div>
