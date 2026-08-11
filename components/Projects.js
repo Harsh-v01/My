@@ -33,6 +33,16 @@ const projects = [
     live:   '#',
     accent: '#8FA6AC',
   },
+  {
+  index: '04',
+  name: 'Year Progress Dots',
+  tagline: 'A visual way to see time passing',
+  desc: 'A minimal Android app and home-screen widget that represents the progress of the year and week through simple dots — designed to make the passing of time visible at a glance.',
+  stack: ['Android', 'Kotlin', 'UI/UX', 'Widgets'],
+  github: 'https://github.com/Harsh-v01/YearProgressDots',
+  live: 'https://harsh-v01.github.io/YearProgressDots/',
+  accent: '#8B6F1F',
+  },
 ]
 
 function ProjectCard({ project, index }) {
