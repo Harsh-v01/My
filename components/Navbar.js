@@ -81,7 +81,7 @@ export default function Navbar() {
 
           {/* CTA */}
           <a
-            href="mailto:harshkumar@example.com"
+            href="mailto:contactharsh15113@gmail.com"
             className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-body font-medium border border-[rgba(200,75,49,0.3)] text-[#3D4F60] hover:bg-[#C84B31] hover:text-[#F0E5D8] hover:border-[#C84B31] transition-all duration-300"
           >
             Say hello

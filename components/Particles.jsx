@@ -125,8 +125,12 @@ export default function Particles({ className = '' }) {
     }
 
     const resize = () => {
-      const nextWidth = Math.max(1, canvas.clientWidth || window.innerWidth)
-      const nextHeight = Math.max(1, canvas.clientHeight || window.innerHeight)
+      const nextWidth = canvas.clientWidth || Math.max(1, window.innerWidth)
+      const nextHeight = canvas.clientHeight || Math.max(1, window.innerHeight)
+
+      // Guard against transient zero measurements (common on first paint)
+      if (!nextWidth || !nextHeight) return
+
       const scale = Math.min(window.devicePixelRatio || 1, 2)
 
       width = nextWidth
@@ -165,6 +169,9 @@ export default function Particles({ className = '' }) {
       }
     }
 
+    // Run an initial resize and then observe the canvas for size changes.
+    // ResizeObserver fires immediately on observe() with the current size
+    // (useful for layout shifts like webfont loading on Vercel first paint).
     resize()
 
     if (prefersReducedMotion.matches) {
@@ -172,7 +179,19 @@ export default function Particles({ className = '' }) {
       return undefined
     }
 
-    window.addEventListener('resize', resize)
+    let resizeObserver = null
+    if (typeof window.ResizeObserver === 'function') {
+      resizeObserver = new window.ResizeObserver(() => resize())
+      try {
+        resizeObserver.observe(canvas)
+      } catch (e) {
+        // Fallback to window resize if observe fails for any reason
+        window.addEventListener('resize', resize)
+      }
+    } else {
+      // Older browsers: fall back to window resize
+      window.addEventListener('resize', resize)
+    }
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('pointerleave', handlePointerLeave, { passive: true })
     document.addEventListener('visibilitychange', handleVisibilityChange)
@@ -181,7 +200,11 @@ export default function Particles({ className = '' }) {
 
     return () => {
       running = false
-      window.removeEventListener('resize', resize)
+      if (resizeObserver) {
+        try { resizeObserver.disconnect() } catch (e) { /* ignore */ }
+      } else {
+        window.removeEventListener('resize', resize)
+      }
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
       document.removeEventListener('visibilitychange', handleVisibilityChange)

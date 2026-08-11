@@ -72,7 +72,7 @@ export default function Hero() {
         />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-28 pb-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full pt-20 pb-16">
         <div className="grid lg:grid-cols-[1.3fr_1fr] gap-12 items-center">
         <div className="max-w-3xl">
           {/* Tag line */}
@@ -98,7 +98,7 @@ export default function Hero() {
             {...fadeUp(0.35)}
             className="font-body text-lg text-[#55677A] max-w-sm leading-relaxed mb-12"
           >
-            Building useful digital products.
+            Building & Enjoying the journey.
           </motion.p>
 
           {/* CTAs */}
@@ -124,9 +124,9 @@ export default function Hero() {
             className="flex items-center gap-10 mt-20 pt-10 border-t border-[rgba(200,75,49,0.1)]"
           >
             {[
-              { num: '3+',  label: 'Projects shipped'   },
+              { num: '4+',  label: 'Projects shipped'   },
               { num: '2+',  label: 'Years building'     },
-              { num: '1',   label: 'National award'     },
+              { num: '1',   label: 'Award'     },
             ].map(({ num, label }) => (
               <div key={label}>
                 <p className="font-display text-3xl font-light text-[#2E4052]">{num}</p>
@@ -153,7 +153,7 @@ export default function Hero() {
                 <img
                   src="/harsh.jpg"
                   alt="Harsh Kumar"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain object-top bg-[#F0E5D8]"
                   style={{ filter: 'grayscale(15%) contrast(1.05)' }}
                   onError={() => setPortraitError(true)}
                 />
