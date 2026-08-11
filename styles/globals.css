@@ -9,14 +9,14 @@
   --font-body:    'DM Sans';
   --font-mono:    'DM Mono';
 
-  --bg-primary:   #faf7f2;
-  --bg-secondary: #f3ede3;
-  --text-primary: #1c1917;
-  --text-secondary: #57534e;
-  --text-muted:   #a8a29e;
-  --accent:       #8b6f47;
-  --accent-light: #c9a55a;
-  --border:       rgba(139, 111, 71, 0.15);
+  --bg-primary:   #F0E5D8;
+  --bg-secondary: #F5EDE2;
+  --text-primary: #2E4052;
+  --text-secondary: #3D4F60;
+  --text-muted:   #8FA6AC;
+  --accent:       #C84B31;
+  --accent-light: #D9BF77;
+  --border:       rgba(200, 75, 49, 0.15);
 }
 
 * {
@@ -52,7 +52,7 @@ body {
 
 /* Selection */
 ::selection {
-  background: rgba(201, 165, 90, 0.25);
+  background: rgba(217, 191, 119, 0.25);
   color: var(--text-primary);
 }
 

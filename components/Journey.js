@@ -29,7 +29,7 @@ export default function Journey() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="journey" className="py-28 lg:py-36 bg-[#1c1917] relative overflow-hidden">
+    <section id="journey" className="py-28 lg:py-36 bg-[#2E4052] relative overflow-hidden">
       {/* Background texture */}
       <div
         className="absolute inset-0 opacity-[0.03]"
@@ -40,7 +40,7 @@ export default function Journey() {
       />
       <div
         className="absolute top-0 right-0 w-[40vw] h-[40vw] opacity-10 rounded-full"
-        style={{ background: 'radial-gradient(circle, #c9a55a 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #D9BF77 0%, transparent 70%)' }}
       />
 
       <div ref={ref} className="max-w-6xl mx-auto px-6 relative">
@@ -59,7 +59,7 @@ export default function Journey() {
             animate={inView ? { scaleY: 1 } : {}}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: 'top' }}
-            className="absolute left-[80px] top-0 bottom-0 w-px bg-gradient-to-b from-[#c9a55a]/60 via-[#c9a55a]/20 to-transparent hidden sm:block"
+            className="absolute left-[80px] top-0 bottom-0 w-px bg-gradient-to-b from-[#D9BF77]/60 via-[#D9BF77]/20 to-transparent hidden sm:block"
           />
 
           <div className="space-y-12">
@@ -73,16 +73,16 @@ export default function Journey() {
               >
                 {/* Year */}
                 <div className="shrink-0 sm:w-[80px] sm:text-right sm:pr-6 sm:pt-0.5">
-                  <span className="font-mono text-xs text-[#c9a55a] tracking-widest">{year}</span>
+                  <span className="font-mono text-xs text-[#D9BF77] tracking-widest">{year}</span>
                 </div>
 
                 {/* Dot */}
-                <div className="absolute left-[72px] top-1.5 w-2 h-2 rounded-full bg-[#c9a55a] hidden sm:block ring-4 ring-[#1c1917]" />
+                <div className="absolute left-[72px] top-1.5 w-2 h-2 rounded-full bg-[#D9BF77] hidden sm:block ring-4 ring-[#2E4052]" />
 
                 {/* Content */}
                 <div className="sm:pl-10 flex-1">
-                  <h3 className="font-body font-medium text-[#faf7f2] mb-2">{title}</h3>
-                  <p className="font-body text-sm text-[#a8a29e] leading-relaxed max-w-md">{desc}</p>
+                  <h3 className="font-body font-medium text-[#F0E5D8] mb-2">{title}</h3>
+                  <p className="font-body text-sm text-[#8FA6AC] leading-relaxed max-w-md">{desc}</p>
                 </div>
               </motion.div>
             ))}

@@ -40,11 +40,11 @@ export default function Contact() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="contact" className="py-28 lg:py-36 bg-[#faf7f2] relative overflow-hidden">
+    <section id="contact" className="py-28 lg:py-36 bg-[#FAF7F2] relative overflow-hidden">
       {/* Warm blob */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60vw] h-[30vw] opacity-20 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse, #e8d3a8 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse, #A5C9CA 0%, transparent 70%)' }}
       />
 
       <div ref={ref} className="max-w-6xl mx-auto px-6 relative">
@@ -56,25 +56,25 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="flex items-center justify-center gap-3 mb-8"
           >
-            <span className="inline-block w-6 h-px bg-[#c9a55a]" />
-            <span className="text-xs font-mono text-[#a8a29e] tracking-[0.18em] uppercase">Contact</span>
-            <span className="inline-block w-6 h-px bg-[#c9a55a]" />
+            <span className="inline-block w-6 h-px bg-[#D9BF77]" />
+            <span className="text-xs font-mono text-[#8FA6AC] tracking-[0.18em] uppercase">Contact</span>
+            <span className="inline-block w-6 h-px bg-[#D9BF77]" />
           </motion.div>
 
           <motion.h2
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-tight text-[#1c1917] mb-6"
+            className="font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-tight text-[#2E4052] mb-6"
           >
-            Let's <span className="italic text-[#8b6f47]">Connect</span>
+            Let's <span className="italic text-[#C84B31]">Connect</span>
           </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="font-body text-base text-[#78716c] leading-relaxed mb-14"
+            className="font-body text-base text-[#55677A] leading-relaxed mb-14"
           >
             Whether it's a project idea, a collaboration, or just a hello — I'd love to hear from you.
           </motion.p>
@@ -90,12 +90,12 @@ export default function Contact() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
-                className="group flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[rgba(139,111,71,0.15)] bg-[#f9f0e0]/60 hover:bg-[#f9f0e0] hover:border-[rgba(139,111,71,0.3)] transition-all duration-300 w-full sm:w-auto"
+                className="group flex items-center gap-3 px-5 py-3.5 rounded-2xl border border-[rgba(200,75,49,0.15)] bg-[#F5EDE2]/60 hover:bg-[#F5EDE2] hover:border-[rgba(200,75,49,0.3)] transition-all duration-300 w-full sm:w-auto"
               >
-                <span className="text-[#a8a29e] group-hover:text-[#8b6f47] transition-colors">{icon}</span>
+                <span className="text-[#8FA6AC] group-hover:text-[#C84B31] transition-colors">{icon}</span>
                 <div className="text-left">
-                  <p className="text-[10px] font-mono text-[#a8a29e] tracking-widest uppercase">{label}</p>
-                  <p className="text-sm font-body text-[#57534e] group-hover:text-[#1c1917] transition-colors mt-0.5">{value}</p>
+                  <p className="text-[10px] font-mono text-[#8FA6AC] tracking-widest uppercase">{label}</p>
+                  <p className="text-sm font-body text-[#3D4F60] group-hover:text-[#2E4052] transition-colors mt-0.5">{value}</p>
                 </div>
               </motion.a>
             ))}
@@ -110,7 +110,7 @@ export default function Contact() {
           >
             <a
               href="mailto:harshkumar@example.com"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#1c1917] text-[#faf7f2] rounded-full font-body font-medium text-sm tracking-wide hover:bg-[#8b6f47] transition-all duration-400"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-[#2E4052] text-[#F0E5D8] rounded-full font-body font-medium text-sm tracking-wide hover:bg-[#C84B31] transition-all duration-400"
             >
               Send an email
               <span className="inline-block transition-transform duration-300 group-hover:translate-x-1">→</span>

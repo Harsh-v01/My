@@ -29,7 +29,7 @@ export default function Experiments() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="experiments" className="py-28 lg:py-36 bg-[#f3ede3]">
+    <section id="experiments" className="py-28 lg:py-36 bg-[#F0E5D8]">
       <div ref={ref} className="max-w-6xl mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
@@ -50,17 +50,17 @@ export default function Experiments() {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 + i * 0.09, ease: [0.16, 1, 0.3, 1] }}
-              className="group p-7 rounded-2xl bg-[#faf7f2] border border-[rgba(139,111,71,0.12)] hover:border-[rgba(139,111,71,0.25)] hover:shadow-[0_4px_24px_rgba(139,111,71,0.06)] transition-all duration-400"
+              className="group p-7 rounded-2xl bg-[#F5EDE2] border border-[rgba(46,64,82,0.1)] shadow-[0_8px_30px_rgba(46,64,82,0.04)] hover:border-[rgba(46,64,82,0.18)] hover:shadow-[0_10px_36px_rgba(46,64,82,0.08)] transition-all duration-400"
             >
               <div className="flex items-start justify-between mb-4">
-                <h3 className="font-body font-medium text-[#1c1917]">{title}</h3>
-                <span className="text-[10px] font-mono text-[#c9a55a] bg-[#f2e4c8] px-2.5 py-1 rounded-full tracking-wide shrink-0 ml-3">
+                <h3 className="font-body font-medium text-[#2E4052]">{title}</h3>
+                <span className="text-[10px] font-mono text-[#8B6F1F] bg-[#D9BF77]/20 px-2.5 py-1 rounded-full tracking-wide shrink-0 ml-3">
                   {tag}
                 </span>
               </div>
-              <p className="font-body text-sm text-[#78716c] leading-relaxed">{desc}</p>
+              <p className="font-body text-sm text-[#55677A] leading-relaxed">{desc}</p>
               {/* Hover line */}
-              <div className="mt-5 w-0 group-hover:w-8 h-px bg-[#c9a55a] transition-all duration-500" />
+              <div className="mt-5 w-0 group-hover:w-8 h-px bg-[#D9BF77] transition-all duration-500" />
             </motion.div>
           ))}
         </div>
