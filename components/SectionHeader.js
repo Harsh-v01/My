@@ -1,21 +1,21 @@
-import { motion } from 'framer-motion'
-
 export default function SectionHeader({ eyebrow, heading, sub, light = false }) {
   return (
     <div className="mb-16">
       {eyebrow && (
-        <div className="flex items-center gap-3 mb-4">
-          <span className={`inline-block w-6 h-px ${light ? 'bg-[#A5C9CA]' : 'bg-[#D9BF77]'}`} />
-          <span className={`text-xs font-mono tracking-[0.18em] uppercase ${light ? 'text-[#D9BF77]' : 'text-[#8FA6AC]'}`}>
+        <div className="mb-4 flex items-center gap-3">
+          <span className="inline-block h-px w-6 bg-[var(--gold)]" />
+          <span className={`text-xs font-mono uppercase tracking-[0.18em] ${light ? 'text-[var(--gold)]' : 'text-[var(--text-soft)]'}`}>
             {eyebrow}
           </span>
         </div>
       )}
-      <h2 className={`font-display text-[clamp(2.2rem,5vw,4rem)] font-light leading-tight ${light ? 'text-[#F0E5D8]' : 'text-[#2E4052]'}`}>
+
+      <h2 className={`font-display text-[clamp(2.2rem,5vw,4rem)] font-light leading-tight ${light ? 'text-[var(--journey-text)]' : 'text-[var(--text)]'}`}>
         {heading}
       </h2>
+
       {sub && (
-        <p className={`font-body text-base mt-4 max-w-md leading-relaxed ${light ? 'text-[#D9BF77]/80' : 'text-[#55677A]'}`}>
+        <p className={`mt-4 max-w-md font-body text-base leading-relaxed ${light ? 'text-[var(--gold)]/80' : 'text-[var(--text-muted)]'}`}>
           {sub}
         </p>
       )}

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
-import { useInView } from './useInView'
 import SectionHeader from './SectionHeader'
+import { useInView } from './useInView'
 
 const milestones = [
   {
@@ -16,7 +16,7 @@ const milestones = [
   {
     year: '2024',
     title: 'More experiments, bigger problems',
-    desc: 'Worked on projects, hackathons, and student initiatives while exploring areas like mobile development, cloud, AI, and automation. Not everything worked — but every failed attempt taught me something useful.',
+    desc: 'Worked on projects, hackathons, and student initiatives while exploring areas like mobile development, cloud, AI, and automation. Not everything worked - but every failed attempt taught me something useful.',
   },
   {
     year: '2025',
@@ -26,7 +26,7 @@ const milestones = [
   {
     year: '2026',
     title: 'Graduated. Now the real journey begins.',
-    desc: 'Completed my B.Tech and started looking beyond college — towards real products, real problems, and opportunities where I can contribute while continuing to grow as an engineer.',
+    desc: 'Completed my B.Tech and started looking beyond college - towards real products, real problems, and opportunities where I can contribute while continuing to grow as an engineer.',
   },
 ]
 
@@ -34,11 +34,7 @@ export default function Journey() {
   const [ref, inView] = useInView()
 
   return (
-    <section
-      id="journey"
-      className="py-28 lg:py-36 bg-[#2E4052] relative overflow-hidden"
-    >
-      {/* Background texture */}
+    <section id="journey" className="relative overflow-hidden bg-[var(--journey-bg)] py-28 lg:py-36">
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
@@ -48,85 +44,52 @@ export default function Journey() {
       />
 
       <div
-        className="absolute top-0 right-0 w-[40vw] h-[40vw] opacity-10 rounded-full"
-        style={{
-          background:
-            'radial-gradient(circle, #D9BF77 0%, transparent 70%)',
-        }}
+        className="absolute right-0 top-0 h-[40vw] w-[40vw] rounded-full opacity-10"
+        style={{ background: 'radial-gradient(circle, var(--gold) 0%, transparent 70%)' }}
       />
 
-      <div ref={ref} className="max-w-6xl mx-auto px-6 relative">
-
+      <div ref={ref} className="relative mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{
-            duration: 0.7,
-            ease: [0.16, 1, 0.3, 1],
-          }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <SectionHeader
-            eyebrow="So far"
-            heading="The journey"
-            sub="Still figuring things out. Still building."
-            light
-          />
+          <SectionHeader eyebrow="So far" heading="The journey" sub="Still figuring things out. Still building." light />
         </motion.div>
 
         <div className="relative">
-
-          {/* Vertical line */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={inView ? { scaleY: 1 } : {}}
-            transition={{
-              duration: 1.2,
-              delay: 0.3,
-              ease: [0.16, 1, 0.3, 1],
-            }}
+            transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{ transformOrigin: 'top' }}
-            className="absolute left-[80px] top-0 bottom-0 w-px bg-gradient-to-b from-[#D9BF77]/60 via-[#D9BF77]/20 to-transparent hidden sm:block"
+            className="absolute bottom-0 left-[80px] top-0 hidden w-px bg-gradient-to-b from-[var(--gold)]/60 via-[var(--gold)]/20 to-transparent sm:block"
           />
 
           <div className="space-y-14">
-
-            {milestones.map(({ year, title, desc }, i) => (
+            {milestones.map(({ year, title, desc }, index) => (
               <motion.div
                 key={year}
                 initial={{ opacity: 0, x: -24 }}
                 animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{
-                  duration: 0.65,
-                  delay: 0.2 + i * 0.12,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="relative flex gap-8 sm:gap-0 items-start"
+                transition={{ duration: 0.65, delay: 0.2 + index * 0.12, ease: [0.16, 1, 0.3, 1] }}
+                className="relative flex items-start gap-8 sm:gap-0"
               >
-
-                {/* Year */}
-                <div className="shrink-0 sm:w-[80px] sm:text-right sm:pr-6 sm:pt-0.5">
-                  <span className="font-mono text-xs text-[#D9BF77] tracking-widest">
-                    {year}
-                  </span>
+                <div className="shrink-0 sm:w-[80px] sm:pr-6 sm:pt-0.5 sm:text-right">
+                  <span className="font-mono text-xs tracking-widest text-[var(--gold)]">{year}</span>
                 </div>
 
-                {/* Dot */}
-                <div className="absolute left-[72px] top-1.5 w-2 h-2 rounded-full bg-[#D9BF77] hidden sm:block ring-4 ring-[#2E4052]" />
+                <div
+                  className="absolute left-[72px] top-1.5 hidden h-2 w-2 rounded-full bg-[var(--gold)] sm:block"
+                  style={{ boxShadow: '0 0 0 4px var(--journey-bg)' }}
+                />
 
-                {/* Content */}
-                <div className="sm:pl-10 flex-1">
-                  <h3 className="font-body font-medium text-[#F0E5D8] mb-2">
-                    {title}
-                  </h3>
-
-                  <p className="font-body text-sm text-[#8FA6AC] leading-relaxed max-w-md">
-                    {desc}
-                  </p>
+                <div className="flex-1 sm:pl-10">
+                  <h3 className="mb-2 font-body font-medium text-[var(--journey-text)]">{title}</h3>
+                  <p className="max-w-md font-body text-sm leading-relaxed text-[var(--text-soft)]">{desc}</p>
                 </div>
-
               </motion.div>
             ))}
-
           </div>
         </div>
       </div>

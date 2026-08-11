@@ -6,17 +6,68 @@
 
 :root {
   --font-display: 'Cormorant Garamond';
-  --font-body:    'DM Sans';
-  --font-mono:    'DM Mono';
+  --font-body: 'DM Sans';
+  --font-mono: 'DM Mono';
 
-  --bg-primary:   #F0E5D8;
-  --bg-secondary: #F5EDE2;
-  --text-primary: #2E4052;
-  --text-secondary: #3D4F60;
-  --text-muted:   #8FA6AC;
-  --accent:       #C84B31;
-  --accent-light: #D9BF77;
-  --border:       rgba(200, 75, 49, 0.15);
+  --bg: #FAF7F2;
+  --surface: #F5EDE2;
+  --soft-bg: #F0E5D8;
+  --text: #2E4052;
+  --text-muted: #55677A;
+  --text-soft: #8FA6AC;
+  --accent: #C84B31;
+  --gold: #D9BF77;
+  --border: rgba(200, 75, 49, 0.15);
+  --border-strong: rgba(200, 75, 49, 0.22);
+  --divider: rgba(139, 111, 71, 0.2);
+  --hero-ring: rgba(46, 64, 82, 0.35);
+  --hero-shadow: 0 20px 60px -20px rgba(46, 64, 82, 0.35);
+  --card-shadow: 0 8px 30px rgba(46, 64, 82, 0.04);
+  --card-shadow-strong: 0 12px 42px rgba(46, 64, 82, 0.08);
+  --hero-overlay: rgba(46, 64, 82, 0.08);
+  --hero-glow-warm: #D9BF77;
+  --hero-glow-cool: #A5C9CA;
+  --journey-bg: #2E4052;
+  --journey-text: #F0E5D8;
+  --particle-bg: #F0E5D8;
+  --particle-dot: 46, 64, 82;
+  --particle-line: 200, 75, 49;
+  --particle-halo: 240, 229, 216;
+  --particle-dot-opacity: 0.85;
+  --particle-line-opacity: 0.45;
+  --particle-halo-opacity: 0.18;
+  color-scheme: light;
+}
+
+html.dark {
+  --bg: #11161C;
+  --surface: #18212A;
+  --soft-bg: #202A33;
+  --text: #F0E5D8;
+  --text-muted: #B8C2C9;
+  --text-soft: #8796A1;
+  --accent: #D65A3D;
+  --gold: #D9BF77;
+  --border: rgba(214, 90, 61, 0.18);
+  --border-strong: rgba(214, 90, 61, 0.24);
+  --divider: rgba(217, 191, 119, 0.14);
+  --hero-ring: rgba(9, 12, 18, 0.58);
+  --hero-shadow: 0 24px 70px -28px rgba(5, 8, 12, 0.72);
+  --card-shadow: 0 8px 30px rgba(3, 6, 10, 0.22);
+  --card-shadow-strong: 0 12px 42px rgba(3, 6, 10, 0.3);
+  --hero-overlay: rgba(17, 22, 28, 0.12);
+  --hero-glow-warm: #8F6A40;
+  --hero-glow-cool: #5B7280;
+  --journey-bg: #172028;
+  --journey-text: #F0E5D8;
+  --particle-bg: #11161C;
+  --particle-dot: 184, 194, 201;
+  --particle-line: 126, 104, 90;
+  --particle-halo: 217, 191, 119;
+  --particle-dot-opacity: 0.48;
+  --particle-line-opacity: 0.14;
+  --particle-halo-opacity: 0.08;
+  color-scheme: dark;
 }
 
 * {
@@ -27,33 +78,48 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg);
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--bg);
+  color: var(--text);
   font-family: var(--font-body), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 250ms ease, color 250ms ease;
 }
 
-/* Custom scrollbar */
+.theme-transition,
+.theme-transition * {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease, fill 250ms ease;
+}
+
+a,
+button,
+input,
+textarea,
+select {
+  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease, fill 250ms ease;
+}
+
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--bg);
 }
+
 ::-webkit-scrollbar-thumb {
-  background: var(--accent-light);
+  background: var(--gold);
   border-radius: 2px;
 }
 
-/* Selection */
 ::selection {
   background: rgba(217, 191, 119, 0.25);
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 @layer utilities {

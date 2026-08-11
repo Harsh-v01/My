@@ -1,13 +1,9 @@
-"use client";
-
 import { useEffect, useRef } from 'react'
 
 const MAX_PARTICLES = 90
 const DENSITY_DIVISOR = 14000
 const LINK_DISTANCE = 140
 const POINTER_FORCE = 180
-const DOT_COLOR = '46, 64, 82'
-const LINE_COLOR = '200, 75, 49'
 
 export default function Particles({ className = '' }) {
   const canvasRef = useRef(null)
@@ -16,8 +12,8 @@ export default function Particles({ className = '' }) {
     const canvas = canvasRef.current
     if (!canvas) return undefined
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return undefined
+    const context = canvas.getContext('2d')
+    if (!context) return undefined
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
     let animationFrameId = 0
@@ -27,8 +23,23 @@ export default function Particles({ className = '' }) {
     let pointer = { x: -9999, y: -9999 }
     let pointerActive = false
     let running = true
+    let palette = null
 
     const randomBetween = (min, max) => min + Math.random() * (max - min)
+
+    const readPalette = () => {
+      const styles = window.getComputedStyle(document.documentElement)
+
+      return {
+        background: styles.getPropertyValue('--particle-bg').trim() || styles.getPropertyValue('--soft-bg').trim() || '#F0E5D8',
+        dot: styles.getPropertyValue('--particle-dot').trim() || '46, 64, 82',
+        line: styles.getPropertyValue('--particle-line').trim() || '200, 75, 49',
+        halo: styles.getPropertyValue('--particle-halo').trim() || '240, 229, 216',
+        dotOpacity: Number.parseFloat(styles.getPropertyValue('--particle-dot-opacity')) || 0.85,
+        lineOpacity: Number.parseFloat(styles.getPropertyValue('--particle-line-opacity')) || 0.45,
+        haloOpacity: Number.parseFloat(styles.getPropertyValue('--particle-halo-opacity')) || 0.18,
+      }
+    }
 
     const createParticles = () => {
       const area = width * height
@@ -45,12 +56,14 @@ export default function Particles({ className = '' }) {
     }
 
     const drawFrame = (time) => {
-      ctx.clearRect(0, 0, width, height)
-      ctx.fillStyle = '#F0E5D8'
-      ctx.fillRect(0, 0, width, height)
+      palette = palette || readPalette()
+
+      context.clearRect(0, 0, width, height)
+      context.fillStyle = palette.background
+      context.fillRect(0, 0, width, height)
 
       const pointerRadius = pointerActive ? POINTER_FORCE : 0
-      const pointerRadiusSq = pointerRadius * pointerRadius
+      const pointerRadiusSquared = pointerRadius * pointerRadius
 
       for (const particle of particles) {
         particle.pulse += 0.018
@@ -69,10 +82,10 @@ export default function Particles({ className = '' }) {
         if (pointerActive) {
           const dx = particle.x - pointer.x
           const dy = particle.y - pointer.y
-          const distanceSq = dx * dx + dy * dy
+          const distanceSquared = dx * dx + dy * dy
 
-          if (distanceSq < pointerRadiusSq && distanceSq > 0.001) {
-            const distance = Math.sqrt(distanceSq)
+          if (distanceSquared < pointerRadiusSquared && distanceSquared > 0.001) {
+            const distance = Math.sqrt(distanceSquared)
             const force = (1 - distance / pointerRadius) * 1.15
             particle.x += (dx / distance) * force * 1.2
             particle.y += (dy / distance) * force * 1.2
@@ -80,8 +93,8 @@ export default function Particles({ className = '' }) {
         }
       }
 
-      ctx.save()
-      ctx.lineWidth = 1
+      context.save()
+      context.lineWidth = 1
 
       for (let i = 0; i < particles.length; i += 1) {
         const current = particles[i]
@@ -94,27 +107,27 @@ export default function Particles({ className = '' }) {
 
           if (distance > LINK_DISTANCE) continue
 
-          const opacity = (1 - distance / LINK_DISTANCE) * 0.45
-          ctx.strokeStyle = `rgba(${LINE_COLOR}, ${opacity})`
-          ctx.beginPath()
-          ctx.moveTo(current.x, current.y)
-          ctx.lineTo(other.x, other.y)
-          ctx.stroke()
+          const opacity = (1 - distance / LINK_DISTANCE) * palette.lineOpacity
+          context.strokeStyle = `rgba(${palette.line}, ${opacity})`
+          context.beginPath()
+          context.moveTo(current.x, current.y)
+          context.lineTo(other.x, other.y)
+          context.stroke()
         }
       }
 
-      ctx.restore()
+      context.restore()
 
       for (const particle of particles) {
-        ctx.fillStyle = 'rgba(242, 236, 225, 0.18)'
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.radius + 2.4, 0, Math.PI * 2)
-        ctx.fill()
+        context.fillStyle = `rgba(${palette.halo}, ${palette.haloOpacity})`
+        context.beginPath()
+        context.arc(particle.x, particle.y, particle.radius + 2.4, 0, Math.PI * 2)
+        context.fill()
 
-        ctx.fillStyle = `rgba(${DOT_COLOR}, 0.85)`
-        ctx.beginPath()
-        ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
-        ctx.fill()
+        context.fillStyle = `rgba(${palette.dot}, ${palette.dotOpacity})`
+        context.beginPath()
+        context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2)
+        context.fill()
       }
     }
 
@@ -128,20 +141,19 @@ export default function Particles({ className = '' }) {
       const nextWidth = canvas.clientWidth || Math.max(1, window.innerWidth)
       const nextHeight = canvas.clientHeight || Math.max(1, window.innerHeight)
 
-      // Guard against transient zero measurements (common on first paint)
       if (!nextWidth || !nextHeight) return
 
       const scale = Math.min(window.devicePixelRatio || 1, 2)
 
       width = nextWidth
       height = nextHeight
-
       canvas.width = Math.floor(nextWidth * scale)
       canvas.height = Math.floor(nextHeight * scale)
       canvas.style.width = '100%'
       canvas.style.height = '100%'
 
-      ctx.setTransform(scale, 0, 0, scale, 0, 0)
+      context.setTransform(scale, 0, 0, scale, 0, 0)
+      palette = readPalette()
       createParticles()
       drawFrame(0)
     }
@@ -163,48 +175,76 @@ export default function Particles({ className = '' }) {
         return
       }
 
-      if (!running) {
+      if (!running && !prefersReducedMotion.matches) {
         running = true
         animationFrameId = window.requestAnimationFrame(animate)
       }
     }
 
-    // Run an initial resize and then observe the canvas for size changes.
-    // ResizeObserver fires immediately on observe() with the current size
-    // (useful for layout shifts like webfont loading on Vercel first paint).
-    resize()
-
-    if (prefersReducedMotion.matches) {
+    const handleThemeMutation = () => {
+      palette = readPalette()
       drawFrame(0)
-      return undefined
     }
 
+    resize()
+
     let resizeObserver = null
+    let themeObserver = null
+
     if (typeof window.ResizeObserver === 'function') {
       resizeObserver = new window.ResizeObserver(() => resize())
       try {
         resizeObserver.observe(canvas)
-      } catch (e) {
-        // Fallback to window resize if observe fails for any reason
+      } catch (error) {
         window.addEventListener('resize', resize)
       }
     } else {
-      // Older browsers: fall back to window resize
       window.addEventListener('resize', resize)
     }
+
+    if (typeof window.MutationObserver === 'function') {
+      themeObserver = new window.MutationObserver(handleThemeMutation)
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class', 'style'] })
+    }
+
     window.addEventListener('pointermove', handlePointerMove, { passive: true })
     window.addEventListener('pointerleave', handlePointerLeave, { passive: true })
     document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    if (prefersReducedMotion.matches) {
+      drawFrame(0)
+      return () => {
+        if (resizeObserver) {
+          try { resizeObserver.disconnect() } catch (error) {}
+        } else {
+          window.removeEventListener('resize', resize)
+        }
+
+        if (themeObserver) {
+          try { themeObserver.disconnect() } catch (error) {}
+        }
+
+        window.removeEventListener('pointermove', handlePointerMove)
+        window.removeEventListener('pointerleave', handlePointerLeave)
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+      }
+    }
 
     animationFrameId = window.requestAnimationFrame(animate)
 
     return () => {
       running = false
+
       if (resizeObserver) {
-        try { resizeObserver.disconnect() } catch (e) { /* ignore */ }
+        try { resizeObserver.disconnect() } catch (error) {}
       } else {
         window.removeEventListener('resize', resize)
       }
+
+      if (themeObserver) {
+        try { themeObserver.disconnect() } catch (error) {}
+      }
+
       window.removeEventListener('pointermove', handlePointerMove)
       window.removeEventListener('pointerleave', handlePointerLeave)
       document.removeEventListener('visibilitychange', handleVisibilityChange)
@@ -212,11 +252,5 @@ export default function Particles({ className = '' }) {
     }
   }, [])
 
-  return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden="true"
-      className={`pointer-events-none block ${className}`}
-    />
-  )
+  return <canvas ref={canvasRef} aria-hidden="true" className={`pointer-events-none block ${className}`} />
 }

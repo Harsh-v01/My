@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -7,8 +8,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        theme: {
+          bg: 'var(--bg)',
+          surface: 'var(--surface)',
+          soft: 'var(--soft-bg)',
+          text: 'var(--text)',
+          muted: 'var(--text-muted)',
+          softText: 'var(--text-soft)',
+          accent: 'var(--accent)',
+          gold: 'var(--gold)',
+          journey: 'var(--journey-bg)',
+          journeyText: 'var(--journey-text)',
+        },
         beige: {
-          50:  '#F5EDE2',
+          50: '#F5EDE2',
           100: '#F0E5D8',
           200: '#D9BF77',
           300: '#A5C9CA',
@@ -20,7 +33,7 @@ module.exports = {
           900: '#2E4052',
         },
         stone: {
-          50:  '#fafaf9',
+          50: '#fafaf9',
           100: '#f5f5f4',
           200: '#e7e5e4',
           300: '#d6d3d1',
@@ -34,25 +47,25 @@ module.exports = {
       },
       fontFamily: {
         display: ['var(--font-display)', 'serif'],
-        body:    ['var(--font-body)',    'sans-serif'],
-        mono:    ['var(--font-mono)',    'monospace'],
+        body: ['var(--font-body)', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
       },
       animation: {
-        'fade-up':    'fadeUp 0.7s ease forwards',
-        'fade-in':    'fadeIn 0.5s ease forwards',
-        'line-grow':  'lineGrow 1s ease forwards',
+        'fade-up': 'fadeUp 0.7s ease forwards',
+        'fade-in': 'fadeIn 0.5s ease forwards',
+        'line-grow': 'lineGrow 1s ease forwards',
       },
       keyframes: {
         fadeUp: {
-          '0%':   { opacity: '0', transform: 'translateY(24px)' },
+          '0%': { opacity: '0', transform: 'translateY(24px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
         fadeIn: {
-          '0%':   { opacity: '0' },
+          '0%': { opacity: '0' },
           '100%': { opacity: '1' },
         },
         lineGrow: {
-          '0%':   { scaleY: '0', transformOrigin: 'top' },
+          '0%': { scaleY: '0', transformOrigin: 'top' },
           '100%': { scaleY: '1', transformOrigin: 'top' },
         },
       },
