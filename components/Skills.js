@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
 
@@ -34,8 +35,15 @@ export default function Skills() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="skills" className="bg-[var(--soft-bg)] py-28 lg:py-36">
-      <div ref={ref} className="mx-auto max-w-6xl px-6">
+    <section id="skills" className="relative overflow-hidden bg-[var(--soft-bg)] py-28 lg:py-36">
+      <AmbientGlow
+        glows={[
+          { color: 'gold', className: 'right-[-20%] top-[8rem] h-[28rem] w-[28rem]', opacity: 0.065 },
+          { color: 'blue', className: 'bottom-[-22%] left-[-18%] h-[26rem] w-[26rem]', opacity: 0.045 },
+        ]}
+      />
+
+      <div ref={ref} className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

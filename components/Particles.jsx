@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 
-const MAX_PARTICLES = 90
+const MAX_PARTICLES = 60
 const DENSITY_DIVISOR = 14000
 const LINK_DISTANCE = 140
 const POINTER_FORCE = 180
@@ -16,6 +16,8 @@ export default function Particles({ className = '' }) {
     if (!context) return undefined
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const isMobile = window.innerWidth < 768
+      const particleLimit = isMobile ? 35 : MAX_PARTICLES
     let animationFrameId = 0
     let width = 0
     let height = 0
@@ -43,7 +45,10 @@ export default function Particles({ className = '' }) {
 
     const createParticles = () => {
       const area = width * height
-      const targetCount = Math.max(36, Math.min(MAX_PARTICLES, Math.floor(area / DENSITY_DIVISOR)))
+      const targetCount = Math.max(
+        isMobile ? 20 : 36,
+        Math.min(particleLimit, Math.floor(area / DENSITY_DIVISOR))
+      )
 
       particles = Array.from({ length: targetCount }, () => ({
         x: Math.random() * width,
@@ -131,11 +136,19 @@ export default function Particles({ className = '' }) {
       }
     }
 
-    const animate = (time) => {
-      if (!running) return
-      drawFrame(time)
-      animationFrameId = window.requestAnimationFrame(animate)
-    }
+        let lastFrameTime = 0
+        const FRAME_INTERVAL = 1000 / 30
+
+        const animate = (time) => {
+          if (!running) return
+
+          if (time - lastFrameTime >= FRAME_INTERVAL) {
+            lastFrameTime = time
+            drawFrame(time)
+          }
+
+          animationFrameId = window.requestAnimationFrame(animate)
+        }
 
     const resize = () => {
       const nextWidth = canvas.clientWidth || Math.max(1, window.innerWidth)
@@ -143,7 +156,7 @@ export default function Particles({ className = '' }) {
 
       if (!nextWidth || !nextHeight) return
 
-      const scale = Math.min(window.devicePixelRatio || 1, 2)
+      const scale = Math.min(window.devicePixelRatio || 1, 1.5)
 
       width = nextWidth
       height = nextHeight

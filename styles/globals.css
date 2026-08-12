@@ -27,6 +27,9 @@
   --hero-overlay: rgba(46, 64, 82, 0.08);
   --hero-glow-warm: #D9BF77;
   --hero-glow-cool: #A5C9CA;
+  --glow-gold: #D9BF77;
+  --glow-terracotta: #C84B31;
+  --glow-blue: #A5C9CA;
   --journey-bg: #2E4052;
   --journey-text: #F0E5D8;
   --particle-bg: #F0E5D8;
@@ -58,6 +61,9 @@ html.dark {
   --hero-overlay: rgba(17, 22, 28, 0.12);
   --hero-glow-warm: #8F6A40;
   --hero-glow-cool: #5B7280;
+  --glow-gold: #D9BF77;
+  --glow-terracotta: #D65A3D;
+  --glow-blue: #526777;
   --journey-bg: #172028;
   --journey-text: #F0E5D8;
   --particle-bg: #11161C;

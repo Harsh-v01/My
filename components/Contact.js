@@ -1,11 +1,14 @@
 import { motion } from 'framer-motion'
+import AmbientGlow from './AmbientGlow'
 import { useInView } from './useInView'
+
+const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=contactharsh@gmail.com'
 
 const links = [
   {
     label: 'Email',
     value: 'Say hello',
-    href: 'mailto:contactharsh@gmail.com',
+    href: emailHref,
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -41,12 +44,14 @@ export default function Contact() {
 
   return (
     <section id="contact" className="relative overflow-hidden bg-[var(--bg)] py-28 lg:py-36">
-      <div
-        className="pointer-events-none absolute bottom-0 left-1/2 h-[30vw] w-[60vw] -translate-x-1/2 opacity-20"
-        style={{ background: 'radial-gradient(ellipse, var(--hero-glow-cool) 0%, transparent 70%)' }}
+      <AmbientGlow
+        glows={[
+          { color: 'blue', className: 'bottom-[-16%] left-1/2 h-[30rem] w-[58rem] -translate-x-1/2', opacity: 0.11 },
+          { color: 'gold', className: 'right-[-18%] top-[10%] h-[26rem] w-[26rem]', opacity: 0.06 },
+        ]}
       />
 
-      <div ref={ref} className="relative mx-auto max-w-6xl px-6">
+      <div ref={ref} className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="mx-auto max-w-2xl text-center">
           <motion.div
             initial={{ opacity: 0 }}
@@ -107,7 +112,9 @@ export default function Contact() {
             className="mt-12"
           >
             <a
-              href="mailto:contactharsh@gmail.com"
+              href={emailHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 rounded-full bg-[var(--text)] px-8 py-4 font-body text-sm font-medium tracking-wide text-[var(--surface)] hover:bg-[var(--accent)]"
             >
               Send an email

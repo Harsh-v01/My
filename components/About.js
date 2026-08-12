@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
 
@@ -24,8 +25,15 @@ export default function About() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="about" className="bg-[var(--bg)] py-28 lg:py-36">
-      <div ref={ref} className="mx-auto max-w-6xl px-6">
+    <section id="about" className="relative overflow-hidden bg-[var(--bg)] py-28 lg:py-36">
+      <AmbientGlow
+        glows={[
+          { color: 'gold', className: 'right-[-18%] top-8 h-[34rem] w-[34rem]', opacity: 0.1 },
+          { color: 'blue', className: 'bottom-[-24%] left-[-16%] h-[30rem] w-[30rem]', opacity: 0.055 },
+        ]}
+      />
+
+      <div ref={ref} className="relative z-10 mx-auto max-w-6xl px-6">
         <div className="grid items-start gap-16 lg:grid-cols-2">
           <div>
             <motion.div

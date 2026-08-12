@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
+import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
+
+const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=contactharsh@gmail.com'
 
 const projects = [
   {
@@ -87,10 +90,12 @@ function ProjectCard({ project, index }) {
             href={project.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--text)] px-3.5 py-1.5 text-xs font-body font-medium text-[var(--surface)] transition-colors hover:bg-[var(--accent)]"
+            className="group/live inline-flex items-center gap-1.5 rounded-full bg-[var(--text)] px-3.5 py-1.5 text-xs font-body font-medium text-[var(--surface)] transition-colors hover:bg-[var(--accent)]"
           >
             Live Demo
-            <span>&nearr;</span>
+            <span className="transition-transform duration-200 group-hover/live:translate-x-0.5 group-hover/live:-translate-y-0.5">
+              ↗
+            </span>
           </a>
         )}
       </div>
@@ -102,8 +107,16 @@ export default function Projects() {
   const [ref, inView] = useInView()
 
   return (
-    <section id="projects" className="bg-[var(--bg)] py-28 lg:py-36">
-      <div className="mx-auto max-w-6xl px-6">
+    <section id="projects" className="relative overflow-hidden bg-[var(--bg)] py-28 lg:py-36">
+      <AmbientGlow
+        glows={[
+          { color: 'gold', className: 'right-[-14%] top-[-4rem] h-[36rem] w-[36rem]', opacity: 0.12 },
+          { color: 'terracotta', className: 'right-[10%] top-[18rem] h-[24rem] w-[24rem]', opacity: 0.055 },
+          { color: 'blue', className: 'bottom-[-18%] left-[-18%] h-[34rem] w-[34rem]', opacity: 0.06 },
+        ]}
+      />
+
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 24 }}
@@ -171,7 +184,9 @@ export default function Projects() {
             </div>
 
             <a
-              href="mailto:contactharsh@gmail.com"
+              href={emailHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-7 inline-flex items-center gap-2 text-sm font-body text-[var(--text-muted)] transition-colors hover:text-[var(--accent)]"
             >
               Let&apos;s talk

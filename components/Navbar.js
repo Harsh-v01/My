@@ -9,6 +9,8 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
+const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=contactharsh@gmail.com'
+
 const resolveTheme = (value) => (value === 'dark' ? 'dark' : 'light')
 
 const applyTheme = (theme, persist = true) => {
@@ -176,7 +178,9 @@ export default function Navbar() {
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
             <a
-              href="mailto:contactharsh@gmail.com"
+              href={emailHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--accent)] hover:text-[var(--soft-bg)]"
             >
               Say hello
@@ -224,7 +228,9 @@ export default function Navbar() {
             ))}
 
             <motion.a
-              href="mailto:contactharsh@gmail.com"
+              href={emailHref}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.07, duration: 0.4 }}
