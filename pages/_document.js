@@ -20,7 +20,7 @@ export default function Document() {
         <meta name="description" content="Harsh Kumar - Software Engineer building useful digital products." />
         <meta property="og:title" content="Harsh Kumar - Software Engineer" />
         <meta property="og:description" content="Building useful digital products." />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
       <body>
         <Main />
