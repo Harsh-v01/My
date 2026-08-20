@@ -2,64 +2,9 @@ import { motion } from 'framer-motion'
 import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
+import { defaultContent } from '../lib/defaultContent'
 
-const categories = [
-  {
-    label: 'Languages',
-    icon: '[]',
-    skills: ['Java', 'JavaScript', 'Python', 'C', 'C++', 'PHP', 'SQL'],
-  },
-  {
-    label: 'Web & App Development',
-    icon: '<>',
-    skills: [
-      'React',
-      'Next.js',
-      'Node.js',
-      'Express.js',
-      'React Native',
-      'Flutter',
-      'HTML',
-      'CSS',
-      'Tailwind CSS',
-    ],
-  },
-  {
-    label: 'Backend & Databases',
-    icon: '()',
-    skills: [
-      'MongoDB',
-      'MySQL',
-      'Firebase',
-      'REST APIs',
-      'Socket.io',
-    ],
-  },
-  {
-    label: 'AI & Cloud',
-    icon: '{}',
-    skills: [
-      'Google Cloud',
-      'OpenAI',
-      'OCR',
-      'Prompt Engineering',
-      'Automation',
-    ],
-  },
-  {
-    label: 'Tools I Use',
-    icon: '//',
-    skills: [
-      'Git',
-      'GitHub',
-      'VS Code',
-      'Postman',
-      'Figma',
-    ],
-  },
-]
-
-export default function Skills() {
+export default function Skills({ categories = defaultContent.skills }) {
   const [ref, inView] = useInView()
 
   return (

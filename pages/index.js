@@ -8,25 +8,28 @@ import Journey from '../components/Journey'
 import Experiments from '../components/Experiments'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
+import { useContent } from '../lib/useContent'
 
 export default function Home() {
+  const { content } = useContent()
+
   return (
     <>
       <Head>
-        <title>Harsh Kumar - Software Engineer</title>
+        <title>{`${content.hero.firstName} ${content.hero.lastName} - ${content.hero.role}`}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
 
-      <Navbar />
+      <Navbar content={content} />
 
       <main className="theme-transition bg-[var(--bg)] text-[var(--text)]">
-        <Hero />
-        <About />
-        <Projects />
-        <Skills />
-        <Journey />
-        <Experiments />
-        <Contact />
+        <Hero content={content.hero} resume={content.resume} />
+        <About content={content.about} />
+        <Projects projects={content.projects} />
+        <Skills categories={content.skills} />
+        <Journey milestones={content.journey} />
+        <Experiments items={content.experiments} />
+        <Contact content={content.contact} />
       </main>
 
       <Footer />

@@ -2,26 +2,10 @@ import { motion } from 'framer-motion'
 import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
+import { defaultContent } from '../lib/defaultContent'
 
-const traits = [
-  {
-    icon: '[]',
-    title: 'I Build to Learn',
-    desc: 'I understand things better when I build them. Most of my learning has come from turning random ideas into working projects and figuring things out when they inevitably break.',
-  },
-  {
-    icon: '<>',
-    title: 'I Like Exploring',
-    desc: 'I have a hard time sticking to just one area of technology. I enjoy moving between software, AI, automation, and new tools when something catches my attention.',
-  },
-  {
-    icon: '()',
-    title: 'I Care About the Problem',
-    desc: 'Before worrying about the technology, I try to understand what we are actually trying to solve. Good software, to me, should make something simpler, better, or possible.',
-  },
-]
-
-export default function About() {
+export default function About({ content = defaultContent.about }) {
+  const { paragraphs, traits, availabilityText } = content
   const [ref, inView] = useInView()
 
   return (
@@ -73,10 +57,7 @@ export default function About() {
               }}
               className="mb-6 font-body text-base leading-[1.85] text-[var(--text-muted)]"
             >
-              I&apos;m Harsh — a software engineer who likes building things
-              and figuring out how they work. Over the last few years,
-              I&apos;ve explored web development, mobile apps, AI, automation,
-              and whatever else happened to catch my curiosity.
+              {paragraphs[0]}
             </motion.p>
 
             <motion.p
@@ -89,12 +70,7 @@ export default function About() {
               }}
               className="font-body text-base leading-[1.85] text-[var(--text-muted)]"
             >
-              I&apos;m still figuring out where I want to go — and I actually
-              like that. I enjoy difficult problems, learning from people who
-              are better than me, and seeing an idea turn into something real.
-              Right now, I&apos;m looking for opportunities where I can
-              contribute, learn fast, and become the kind of engineer people
-              can rely on.
+              {paragraphs[1]}
             </motion.p>
 
             {/* Availability */}
@@ -113,7 +89,7 @@ export default function About() {
               </span>
 
               <span className="text-xs font-mono tracking-wide text-[var(--text-muted)]">
-                Open to opportunities
+                {availabilityText}
               </span>
             </motion.div>
           </div>

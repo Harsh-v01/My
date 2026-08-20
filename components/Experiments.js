@@ -2,31 +2,9 @@ import { motion } from 'framer-motion'
 import AmbientGlow from './AmbientGlow'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
+import { defaultContent } from '../lib/defaultContent'
 
-const items = [
-  {
-    title: 'AI & Generative AI',
-    desc: 'Experimenting with AI tools, APIs, and workflows to understand where they can actually make software more useful - not just where they look impressive.',
-    tag: 'Exploring',
-  },
-  {
-    title: 'Automation',
-    desc: 'I like finding repetitive problems and thinking, "can this be done automatically?" Exploring agents, workflows, APIs, and tools that can make everyday work simpler.',
-    tag: 'Building',
-  },
-  {
-    title: 'Better Software',
-    desc: 'Learning how to go beyond making something work - cleaner code, better architecture, better user experiences, and understanding the decisions behind good software.',
-    tag: 'Learning',
-  },
-  {
-    title: 'New Ideas',
-    desc: 'I tend to go down interesting rabbit holes. Right now that means experimenting with different technologies, building small things, and seeing which ideas are worth taking further.',
-    tag: 'Always',
-  },
-]
-
-export default function Experiments() {
+export default function Experiments({ items = defaultContent.experiments }) {
   const [ref, inView] = useInView()
 
   return (

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import { defaultContent } from '../lib/defaultContent'
 
 const navLinks = [
   { label: 'About', href: '#about' },
@@ -9,7 +10,13 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const emailHref = 'https://mail.google.com/mail/?view=cm&fs=1&to=contactharsh@gmail.com'
+function ResumeIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
 
 const resolveTheme = (value) => (value === 'dark' ? 'dark' : 'light')
 
@@ -64,7 +71,11 @@ function ThemeToggle({ theme, onToggle }) {
   )
 }
 
-export default function Navbar() {
+export default function Navbar({ content = defaultContent }) {
+  const emailHref = content.contact?.links?.find((l) => l.key === 'email')?.href
+    ?? `https://mail.google.com/mail/?view=cm&fs=1&to=${content.contact?.email ?? defaultContent.contact.email}`
+  const resume = content.resume ?? defaultContent.resume
+
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
@@ -178,6 +189,15 @@ export default function Navbar() {
             <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
             <a
+              href={resume.url}
+              download={resume.fileName}
+              className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+            >
+              <ResumeIcon />
+              Resume
+            </a>
+
+            <a
               href={emailHref}
               target="_blank"
               rel="noopener noreferrer"
@@ -228,12 +248,25 @@ export default function Navbar() {
             ))}
 
             <motion.a
+              href={resume.url}
+              download={resume.fileName}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.07, duration: 0.4 }}
+              onClick={() => setMobileOpen(false)}
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+            >
+              <ResumeIcon />
+              Resume
+            </motion.a>
+
+            <motion.a
               href={emailHref}
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: navLinks.length * 0.07, duration: 0.4 }}
+              transition={{ delay: (navLinks.length + 1) * 0.07, duration: 0.4 }}
               onClick={() => setMobileOpen(false)}
               className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--accent)] hover:text-[var(--soft-bg)]"
             >

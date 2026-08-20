@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import Particles from './Particles'
+import { defaultContent } from '../lib/defaultContent'
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 32 },
@@ -11,7 +12,15 @@ const fadeUp = (delay = 0) => ({
   },
 })
 
-export default function Hero() {
+export default function Hero({ content = defaultContent.hero, resume = defaultContent.resume }) {
+  const {
+    firstName,
+    lastName,
+    role,
+    tagline,
+    stats,
+    photo = defaultContent.hero.photo,
+  } = content
   return (
     <section id="hero" className="relative isolate min-h-screen overflow-hidden bg-[var(--soft-bg)]">
       <div className="absolute inset-0 z-0 overflow-hidden bg-[var(--soft-bg)]">
@@ -43,7 +52,7 @@ export default function Hero() {
             <motion.div {...fadeUp(0.1)} className="mb-8 flex items-center gap-3 lg:mb-10">
               <span className="inline-block h-px w-6 bg-[var(--gold)]" />
               <span className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--text-soft)]">
-                Software Engineer
+                {role}
               </span>
             </motion.div>
 
@@ -51,16 +60,16 @@ export default function Hero() {
               {...fadeUp(0.2)}
               className="mb-7 font-display text-[clamp(4rem,12vw,8rem)] font-light leading-[0.88] tracking-tight text-[var(--text)]"
             >
-              Harsh
+              {firstName}
               <br />
-              <span className="italic text-[var(--accent)]">Kumar</span>
+              <span className="italic text-[var(--accent)]">{lastName}</span>
             </motion.h1>
 
             <motion.p
               {...fadeUp(0.35)}
               className="mb-9 max-w-sm font-body text-lg leading-relaxed text-[var(--text-muted)] lg:mb-12"
             >
-              I enjoy solving messy problems and turning them into simple products.
+              {tagline}
             </motion.p>
 
             <motion.div {...fadeUp(0.45)} className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -80,6 +89,17 @@ export default function Hero() {
               >
                 Contact
               </a>
+
+              <a
+                href={resume.url}
+                download={resume.fileName}
+                className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 font-body text-sm font-medium tracking-wide text-[var(--text-muted)] hover:border-[color:var(--border-strong)] hover:text-[var(--text)] sm:px-6"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform duration-300 group-hover:translate-y-0.5">
+                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Resume
+              </a>
             </motion.div>
 
             <motion.div
@@ -93,7 +113,7 @@ export default function Hero() {
 
                 <div className="absolute inset-0 overflow-hidden rounded-3xl" style={{ boxShadow: 'var(--hero-shadow)' }}>
                   <img
-                    src="/Harsh.jpg"
+                    src={photo}
                     alt="Harsh Kumar"
                     className="h-full w-full bg-[var(--soft-bg)] object-contain object-top"
                     style={{ filter: 'grayscale(15%) contrast(1.05)' }}
@@ -108,11 +128,7 @@ export default function Hero() {
               {...fadeUp(0.65)}
               className="mt-14 flex items-center justify-between gap-8 border-t border-[color:var(--border)] pt-8 sm:justify-start sm:gap-12 lg:mt-20 lg:pt-10"
             >
-              {[
-                { num: '4+', label: 'Projects shipped' },
-                { num: '3+', label: 'Years learning' },
-                { num: '1', label: 'Hackathon win' },
-              ].map(({ num, label }) => (
+              {stats.map(({ num, label }) => (
                 <div key={label}>
                   <p className="font-display text-3xl font-light text-[var(--text)]">{num}</p>
                   <p className="mt-0.5 font-body text-xs tracking-wide text-[var(--text-soft)]">{label}</p>
@@ -132,7 +148,7 @@ export default function Hero() {
 
               <div className="absolute inset-0 overflow-hidden rounded-3xl" style={{ boxShadow: 'var(--hero-shadow)' }}>
                 <img
-                  src="/Harsh.jpg"
+                  src={photo}
                   alt="Harsh Kumar"
                   className="h-full w-full bg-[var(--soft-bg)] object-contain object-top"
                   style={{ filter: 'grayscale(15%) contrast(1.05)' }}

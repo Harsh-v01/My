@@ -8,7 +8,7 @@ export default function Footer() {
 
         <div className="flex items-center gap-1 font-mono text-xs text-[var(--gold)]/65">
           <span className="text-[var(--text-soft)]">Built with</span>
-          <span className="mx-1">Next.js - Tailwind - Framer</span>
+          <span className="mx-1">Next.js - Tailwind - Passion</span>
         </div>
 
         <p className="font-mono text-[10px] tracking-widest text-[var(--text-soft)]">

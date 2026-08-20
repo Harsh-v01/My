@@ -1,36 +1,9 @@
 import { motion } from 'framer-motion'
 import SectionHeader from './SectionHeader'
 import { useInView } from './useInView'
+import { defaultContent } from '../lib/defaultContent'
 
-const milestones = [
-  {
-    year: '2022',
-    title: 'Started with a lot to figure out',
-    desc: 'Started my B.Tech journey at MIT ADT University, Pune. I was still figuring out what I wanted to do, but programming quickly became something I wanted to understand better.',
-  },
-  {
-    year: '2023',
-    title: 'Started building outside the classroom',
-    desc: 'I began working on small projects, exploring different technologies, and getting involved in college activities. This was also when I realised I learn much faster when I actually build something.',
-  },
-  {
-    year: '2024',
-    title: 'More experiments, bigger problems',
-    desc: 'Worked on projects, hackathons, and student initiatives while exploring areas like mobile development, cloud, AI, and automation. Not everything worked - but every failed attempt taught me something useful.',
-  },
-  {
-    year: '2025',
-    title: 'Figuring out what I enjoy',
-    desc: 'Started going deeper into software development while experimenting with AI, automation, full-stack projects, and different ways of turning ideas into working products.',
-  },
-  {
-    year: '2026',
-    title: 'Graduated. Now the real journey begins.',
-    desc: 'Completed my B.Tech and started looking beyond college - towards real products, real problems, and opportunities where I can contribute while continuing to grow as an engineer.',
-  },
-]
-
-export default function Journey() {
+export default function Journey({ milestones = defaultContent.journey }) {
   const [ref, inView] = useInView()
 
   return (

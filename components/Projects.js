@@ -1,49 +1,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from './useInView'
 import SectionHeader from './SectionHeader'
-
-const projects = [
-  {
-    index: '01',
-    name: 'Samvad',
-    tagline: 'Real-time communication app',
-    desc: 'A communication app built around real-time messaging and accessible interaction, with language support and speech-based features.',
-    stack: ['React', 'Firebase', 'Google Cloud', 'Speech API'],
-    image: '/projects/samvad.png',
-    github: 'https://github.com/Harsh-v01/Samwaad_v02',
-    live: 'https://chat-html-rapy.onrender.com/',
-  },
-  {
-    index: '02',
-    name: 'padh.AI',
-    tagline: 'AI Academic Hub',
-    desc: 'An experiment in turning academic documents into something easier to work with — combining OCR, AI processing, and a focused web interface.',
-    stack: ['Python', 'FastAPI', 'Tesseract OCR', 'OpenAI', 'React'],
-    image: '/projects/padh-AI.png',
-    github: 'https://github.com/Harsh-v01/Padh.AI',
-    live: 'https://padh-ai-umber.vercel.app/',
-  },
-  {
-    index: '03',
-    name: 'Certificate Generator',
-    tagline: 'Automation tool with QR',
-    desc: 'A tool for generating certificates in bulk, embedding unique QR codes, and exporting finished certificates as PDFs.',
-    stack: ['Python', 'Pillow', 'qrcode', 'Flask'],
-    image: '/projects/certificate-generator.png',
-    github: 'https://github.com/Harsh-v01/Certi_generator',
-    live: null,
-  },
-  {
-    index: '04',
-    name: 'Year Progress Dots',
-    tagline: 'A visual way to see time passing',
-    desc: 'A minimal Android app and home-screen widget that represents the progress of the year and week through simple dots.',
-    stack: ['Android', 'Kotlin', 'UI/UX', 'Widgets'],
-    image: '/projects/year-progress-dots.png',
-    github: 'https://github.com/Harsh-v01/YearProgressDots',
-    live: 'https://harsh-v01.github.io/YearProgressDots/',
-  },
-]
+import { defaultContent } from '../lib/defaultContent'
 
 function GithubIcon() {
   return (
@@ -186,7 +144,7 @@ function ComingSoonCard({ index, title, text }) {
   )
 }
 
-export default function Projects() {
+export default function Projects({ projects = defaultContent.projects }) {
   const [ref, inView] = useInView()
 
   return (
