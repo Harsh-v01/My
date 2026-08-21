@@ -70,16 +70,42 @@ export default function AdminPanel() {
   }, [user])
 
   const handleSave = async () => {
-    setSaving(true)
-    try {
-      await setDoc(doc(db, 'content', 'site'), data)
-      setSavedAt(new Date())
-    } catch (err) {
-      alert('Save failed: ' + err.message)
-    } finally {
-      setSaving(false)
+  setSaving(true)
+
+  try {
+    const dataToSave = {
+      ...data,
+
+      projects: data.projects.map((project) => ({
+        ...project,
+        stack: Array.isArray(project.stack)
+          ? project.stack
+          : project.stack
+              .split(',')
+              .map((item) => item.trim())
+              .filter(Boolean),
+      })),
+
+      skills: data.skills.map((category) => ({
+        ...category,
+        skills: Array.isArray(category.skills)
+          ? category.skills
+          : category.skills
+              .split(',')
+              .map((item) => item.trim())
+              .filter(Boolean),
+      })),
     }
+
+    await setDoc(doc(db, 'content', 'site'), dataToSave)
+
+    setSavedAt(new Date())
+  } catch (err) {
+    alert('Save failed: ' + err.message)
+  } finally {
+    setSaving(false)
   }
+}
 
   const handleLogout = async () => {
     await signOut(auth)
@@ -247,7 +273,7 @@ function ProjectsTab({ value, onChange }) {
     projects[i] = { ...projects[i], [k]: v }
     onChange(projects)
   }
-  const setStack = (i, v) => set(i, 'stack', v.split(',').map((s) => s.trim()).filter(Boolean))
+  const setStack = (i, v) => set(i, 'stack', v)
   const add = () =>
     onChange([
       ...value,
@@ -279,7 +305,11 @@ function ProjectsTab({ value, onChange }) {
             <Field label="Tagline" value={p.tagline} onChange={(e) => set(i, 'tagline', e.target.value)} />
           </div>
           <TextArea label="Description" value={p.desc} onChange={(e) => set(i, 'desc', e.target.value)} />
-          <Field label="Tech stack (comma separated)" value={p.stack.join(', ')} onChange={(e) => setStack(i, e.target.value)} />
+          <Field
+            label="Tech stack (comma separated)"
+            value={Array.isArray(p.stack) ? p.stack.join(', ') : p.stack || ''}
+            onChange={(e) => setStack(i, e.target.value)}
+          />
           <Field label="Image path (in /public, e.g. /projects/samvad.png)" value={p.image} onChange={(e) => set(i, 'image', e.target.value)} />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="GitHub URL" value={p.github} onChange={(e) => set(i, 'github', e.target.value)} />
@@ -299,7 +329,7 @@ function SkillsTab({ value, onChange }) {
     cats[i] = { ...cats[i], [k]: v }
     onChange(cats)
   }
-  const setSkills = (i, v) => setCat(i, 'skills', v.split(',').map((s) => s.trim()).filter(Boolean))
+  const setSkills = (i, v) => setCat(i, 'skills', v)
   const add = () => onChange([...value, { label: '', icon: '//', skills: [] }])
   const remove = (i) => onChange(value.filter((_, idx) => idx !== i))
 
@@ -312,7 +342,11 @@ function SkillsTab({ value, onChange }) {
             <input className={cls.input} value={c.label} onChange={(e) => setCat(i, 'label', e.target.value)} placeholder="Category name" />
             <button onClick={() => remove(i)} className={cls.btnGhost}>Remove</button>
           </div>
-          <Field label="Skills (comma separated)" value={c.skills.join(', ')} onChange={(e) => setSkills(i, e.target.value)} />
+          <Field
+  label="Skills (comma separated)"
+  value={Array.isArray(c.skills) ? c.skills.join(', ') : c.skills || ''}
+  onChange={(e) => setSkills(i, e.target.value)}
+/>
         </div>
       ))}
       <button onClick={add} className={cls.btnSmall}>+ Add category</button>
