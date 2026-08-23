@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { useRef } from 'react'
 import { useInView } from './useInView'
 import SectionHeader from './SectionHeader'
 import { defaultContent } from '../lib/defaultContent'
@@ -17,6 +18,18 @@ function GithubIcon() {
   )
 }
 
+function SpotlightCard({ children, className = '' }) {
+  return (
+    <div
+      className={`group relative overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--card)] shadow-none transition-all duration-500 dark:shadow-[0_0_45px_rgba(255,90,46,0.10),0_0_100px_rgba(255,90,46,0.045)] hover:-translate-y-1 dark:hover:shadow-[0_0_55px_rgba(255,90,46,0.14),0_0_120px_rgba(255,90,46,0.06)] ${className}`}
+    >
+      <div className="relative z-10 h-full">
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function ProjectCard({ project, index }) {
   const [ref, inView] = useInView()
 
@@ -30,82 +43,88 @@ function ProjectCard({ project, index }) {
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group flex flex-col overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--card)] transition-all duration-500 hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
+      className="h-full"
     >
-      {/* Project image */}
-      <div className="relative aspect-[16/9] overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--soft-bg)]">
-        <img
-          src={project.image}
-          alt={`${project.name} project preview`}
-          className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
-        />
+      <SpotlightCard className="h-full">
+        {/* Project image */}
+        <div className="relative aspect-[16/9] overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--soft-bg)]">
+          <img
+            src={project.image}
+            alt={`${project.name} project preview`}
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+          />
 
-        {/* Subtle overlay */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-transparent opacity-60" />
 
-        {/* Project number */}
-        <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/25 px-2.5 py-1 font-mono text-[10px] tracking-widest text-white backdrop-blur-sm">
-          {project.index}
-        </span>
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="mb-1 font-display text-2xl font-semibold text-[color:var(--text)]">
-          {project.name}
-        </h3>
-
-        <p className="mb-4 font-body text-sm text-[color:var(--text-soft)]">
-          {project.tagline}
-        </p>
-
-        <div className="mb-5 h-px w-8 bg-[color:var(--gold)] transition-all duration-500 group-hover:w-14" />
-
-        <p className="mb-6 flex-1 font-body text-sm leading-relaxed text-[color:var(--text-muted)]">
-          {project.desc}
-        </p>
-
-        {/* Stack */}
-        <div className="mb-6 flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <span
-              key={tech}
-              className="rounded-full border border-[color:var(--border)] bg-[color:var(--soft-bg)] px-2.5 py-1 font-mono text-[10px] tracking-wide text-[color:var(--text-soft)]"
-            >
-              {tech}
-            </span>
-          ))}
+          <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/25 px-2.5 py-1 font-mono text-[10px] tracking-widest text-white backdrop-blur-sm">
+            {project.index}
+          </span>
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <a
-            href={project.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] px-3.5 py-1.5 font-body text-xs font-medium text-[color:var(--text-muted)] transition-all duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
-          >
-            <GithubIcon />
-            GitHub
-          </a>
+        {/* Content */}
+        <div className="flex min-h-[390px] flex-col p-6">
+          <div className="mb-1 flex items-center justify-between">
+            <h3 className="font-display text-2xl font-semibold text-[color:var(--text)]">
+              {project.name}
+            </h3>
 
-          {project.live ? (
+            <span className="translate-x-2 font-mono text-lg text-[var(--accent)] opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+              ↗
+            </span>
+          </div>
+
+          <p className="mb-4 font-body text-sm text-[color:var(--text-soft)]">
+            {project.tagline}
+          </p>
+
+          <div className="mb-5 h-px w-8 bg-[color:var(--gold)] transition-all duration-500 group-hover:w-14" />
+
+          <p className="mb-6 flex-1 font-body text-sm leading-relaxed text-[color:var(--text-muted)]">
+            {project.desc}
+          </p>
+
+          {/* Stack */}
+          <div className="mb-6 flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-full border border-[color:var(--border)] bg-[color:var(--soft-bg)] px-2.5 py-1 font-mono text-[10px] tracking-wide text-[color:var(--text-soft)]"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+
+          {/* Actions */}
+          <div className="flex items-center gap-3">
             <a
-              href={project.live}
+              href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--text)] px-3.5 py-1.5 font-body text-xs font-medium text-[color:var(--surface)] transition-all duration-300 hover:bg-[color:var(--accent)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] px-3.5 py-1.5 font-body text-xs font-medium text-[color:var(--text-muted)] transition-all duration-300 hover:border-[color:var(--accent)] hover:text-[color:var(--accent)]"
             >
-              Live Demo
-              <span>↗</span>
+              <GithubIcon />
+              GitHub
             </a>
-          ) : (
-            <span className="inline-flex cursor-default items-center gap-1.5 rounded-full border border-[color:var(--border)] px-3.5 py-1.5 font-body text-xs text-[color:var(--text-soft)]">
-              No Live Demo
-            </span>
-          )}
+
+            {project.live ? (
+              <a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[color:var(--text)] px-3.5 py-1.5 font-body text-xs font-medium text-[color:var(--surface)] transition-all duration-300 hover:bg-[color:var(--accent)]"
+              >
+                Live Demo
+                <span>↗</span>
+              </a>
+            ) : (
+              <span className="inline-flex cursor-default items-center gap-1.5 rounded-full border border-[color:var(--border)] px-3.5 py-1.5 font-body text-xs text-[color:var(--text-soft)]">
+                No Live Demo
+              </span>
+            )}
+          </div>
         </div>
-      </div>
+      </SpotlightCard>
     </motion.article>
   )
 }
@@ -120,7 +139,7 @@ function ComingSoonCard({ index, title, text }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{
         duration: 0.7,
-        delay: index * 0.08,
+        delay: 0.32,
         ease: [0.16, 1, 0.3, 1],
       }}
       className="flex min-h-[420px] flex-col items-center justify-center rounded-lg border border-dashed border-[color:var(--border)] bg-[color:var(--soft-bg)]/50 p-8 text-center transition-all duration-500 hover:border-[color:var(--gold)]/50"
@@ -144,7 +163,9 @@ function ComingSoonCard({ index, title, text }) {
   )
 }
 
-export default function Projects({ projects = defaultContent.projects }) {
+export default function Projects({
+  projects = defaultContent.projects,
+}) {
   const [ref, inView] = useInView()
 
   return (
@@ -152,7 +173,7 @@ export default function Projects({ projects = defaultContent.projects }) {
       id="projects"
       className="relative overflow-hidden bg-[color:var(--page-bg)] py-28 lg:py-36"
     >
-      {/* Ambient background glow */}
+      {/* Existing section background glow */}
       <div
         className="pointer-events-none absolute left-[-15%] top-[20%] h-[500px] w-[500px] rounded-full opacity-20 blur-3xl"
         style={{
@@ -189,7 +210,6 @@ export default function Projects({ projects = defaultContent.projects }) {
             />
           ))}
 
-          {/* Skeleton / upcoming cards */}
           <ComingSoonCard
             index="05 / NEXT"
             title="More to come"
