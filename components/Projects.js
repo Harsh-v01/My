@@ -30,7 +30,7 @@ function ProjectCard({ project, index }) {
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--card)] transition-all duration-500 hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
+      className="group flex flex-col overflow-hidden rounded-lg border border-[color:var(--border)] bg-[color:var(--card)] transition-all duration-500 hover:-translate-y-1 hover:border-[color:var(--accent)]/30 hover:shadow-[0_20px_50px_rgba(0,0,0,0.08)]"
     >
       {/* Project image */}
       <div className="relative aspect-[16/9] overflow-hidden border-b border-[color:var(--border)] bg-[color:var(--soft-bg)]">
@@ -51,7 +51,7 @@ function ProjectCard({ project, index }) {
 
       {/* Content */}
       <div className="flex flex-1 flex-col p-6">
-        <h3 className="mb-1 font-display text-2xl font-light text-[color:var(--text)]">
+        <h3 className="mb-1 font-display text-2xl font-semibold text-[color:var(--text)]">
           {project.name}
         </h3>
 
@@ -123,17 +123,17 @@ function ComingSoonCard({ index, title, text }) {
         delay: index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="flex min-h-[420px] flex-col items-center justify-center rounded-2xl border border-dashed border-[color:var(--border)] bg-[color:var(--soft-bg)]/50 p-8 text-center transition-all duration-500 hover:border-[color:var(--gold)]/50"
+      className="flex min-h-[420px] flex-col items-center justify-center rounded-lg border border-dashed border-[color:var(--border)] bg-[color:var(--soft-bg)]/50 p-8 text-center transition-all duration-500 hover:border-[color:var(--gold)]/50"
     >
       <span className="mb-5 font-mono text-xs tracking-[0.25em] text-[color:var(--gold)]">
         {index}
       </span>
 
-      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--border)] text-2xl font-light text-[color:var(--gold)]">
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-[color:var(--border)] text-2xl font-normal text-[color:var(--gold)]">
         +
       </div>
 
-      <p className="mb-2 font-display text-2xl italic font-light text-[color:var(--text)]">
+      <p className="mb-2 font-display text-2xl font-semibold text-[color:var(--text)]">
         {title}
       </p>
 
@@ -172,6 +172,7 @@ export default function Projects({ projects = defaultContent.projects }) {
           }}
         >
           <SectionHeader
+            index="02"
             eyebrow="Work"
             heading="Featured Projects"
             sub="Things I've built, shipped, and learned from along the way."

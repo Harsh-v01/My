@@ -1,77 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@300..600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-display: 'Cormorant Garamond';
-  --font-body: 'DM Sans';
-  --font-mono: 'DM Mono';
+  --font-display: 'Space Grotesk';
+  --font-body: 'Inter';
+  --font-mono: 'JetBrains Mono';
 
-  --bg: #FAF7F2;
-  --surface: #F5EDE2;
-  --soft-bg: #F0E5D8;
-  --text: #2E4052;
-  --text-muted: #55677A;
-  --text-soft: #8FA6AC;
-  --accent: #C84B31;
-  --gold: #D9BF77;
-  --border: rgba(200, 75, 49, 0.15);
-  --border-strong: rgba(200, 75, 49, 0.22);
-  --divider: rgba(139, 111, 71, 0.2);
-  --hero-ring: rgba(46, 64, 82, 0.35);
-  --hero-shadow: 0 20px 60px -20px rgba(46, 64, 82, 0.35);
-  --card-shadow: 0 8px 30px rgba(46, 64, 82, 0.04);
-  --card-shadow-strong: 0 12px 42px rgba(46, 64, 82, 0.08);
-  --hero-overlay: rgba(46, 64, 82, 0.08);
-  --hero-glow-warm: #D9BF77;
-  --hero-glow-cool: #A5C9CA;
-  --glow-gold: #D9BF77;
-  --glow-terracotta: #C84B31;
-  --glow-blue: #A5C9CA;
-  --journey-bg: #2E4052;
-  --journey-text: #F0E5D8;
-  --particle-bg: #F0E5D8;
-  --particle-dot: 46, 64, 82;
-  --particle-line: 200, 75, 49;
-  --particle-halo: 240, 229, 216;
-  --particle-dot-opacity: 0.85;
-  --particle-line-opacity: 0.45;
-  --particle-halo-opacity: 0.18;
+  /* Light mode — kept minimal, dark is the primary aesthetic */
+  --bg: #FAFAF8;
+  --surface: #F2F1EC;
+  --soft-bg: #EEEDE6;
+  --card: #FFFFFF;
+  --page-bg: #FAFAF8;
+  --text: #101114;
+  --text-muted: #55575E;
+  --text-soft: #8A8C93;
+  --accent: #D9491E;
+  --gold: #A9812F;
+  --border: rgba(16, 17, 20, 0.1);
+  --border-strong: rgba(16, 17, 20, 0.2);
+  --divider: rgba(16, 17, 20, 0.14);
+  --hero-ring: rgba(16, 17, 20, 0.25);
+  --hero-shadow: 0 20px 60px -20px rgba(16, 17, 20, 0.25);
+  --card-shadow: 0 8px 30px rgba(16, 17, 20, 0.05);
+  --card-shadow-strong: 0 12px 42px rgba(16, 17, 20, 0.09);
+  --hero-overlay: rgba(16, 17, 20, 0.05);
+  --hero-glow-warm: #D9491E;
+  --hero-glow-cool: #2F6F5E;
+  --glow-gold: #A9812F;
+  --glow-terracotta: #D9491E;
+  --glow-blue: #2F6F5E;
+  --journey-bg: #101114;
+  --journey-text: #F2F1EC;
+  --particle-bg: #FAFAF8;
+  --particle-dot: 16, 17, 20;
+  --particle-line: 217, 73, 30;
+  --particle-halo: 242, 241, 236;
+  --particle-dot-opacity: 0.7;
+  --particle-line-opacity: 0.35;
+  --particle-halo-opacity: 0.14;
   color-scheme: light;
 }
 
 html.dark {
-  --bg: #11161C;
-  --surface: #18212A;
-  --soft-bg: #202A33;
-  --text: #F0E5D8;
-  --text-muted: #B8C2C9;
-  --text-soft: #8796A1;
-  --accent: #D65A3D;
-  --gold: #D9BF77;
-  --border: rgba(214, 90, 61, 0.18);
-  --border-strong: rgba(214, 90, 61, 0.24);
-  --divider: rgba(217, 191, 119, 0.14);
-  --hero-ring: rgba(9, 12, 18, 0.58);
-  --hero-shadow: 0 24px 70px -28px rgba(5, 8, 12, 0.72);
-  --card-shadow: 0 8px 30px rgba(3, 6, 10, 0.22);
-  --card-shadow-strong: 0 12px 42px rgba(3, 6, 10, 0.3);
-  --hero-overlay: rgba(17, 22, 28, 0.12);
-  --hero-glow-warm: #8F6A40;
-  --hero-glow-cool: #5B7280;
-  --glow-gold: #D9BF77;
-  --glow-terracotta: #D65A3D;
-  --glow-blue: #526777;
-  --journey-bg: #172028;
-  --journey-text: #F0E5D8;
-  --particle-bg: #11161C;
-  --particle-dot: 184, 194, 201;
-  --particle-line: 126, 104, 90;
-  --particle-halo: 217, 191, 119;
-  --particle-dot-opacity: 0.48;
-  --particle-line-opacity: 0.14;
+  /* Primary aesthetic: near-black, high-contrast, one signal accent */
+  --bg: #08090B;
+  --surface: #101114;
+  --soft-bg: #16171B;
+  --card: #101114;
+  --page-bg: #08090B;
+  --text: #F3F2ED;
+  --text-muted: #9B9CA3;
+  --text-soft: #64656C;
+  --accent: #FF5A2E;
+  --gold: #E8C468;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --divider: rgba(255, 255, 255, 0.08);
+  --hero-ring: rgba(0, 0, 0, 0.6);
+  --hero-shadow: 0 24px 70px -28px rgba(0, 0, 0, 0.85);
+  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --card-shadow-strong: 0 16px 46px rgba(0, 0, 0, 0.5);
+  --hero-overlay: rgba(8, 9, 11, 0.15);
+  --hero-glow-warm: #FF5A2E;
+  --hero-glow-cool: #3E7C68;
+  --glow-gold: #E8C468;
+  --glow-terracotta: #FF5A2E;
+  --glow-blue: #3E7C68;
+  --journey-bg: #101114;
+  --journey-text: #F3F2ED;
+  --particle-bg: #08090B;
+  --particle-dot: 155, 156, 163;
+  --particle-line: 255, 90, 46;
+  --particle-halo: 232, 196, 104;
+  --particle-dot-opacity: 0.4;
+  --particle-line-opacity: 0.16;
   --particle-halo-opacity: 0.08;
   color-scheme: dark;
 }
@@ -121,17 +127,37 @@ select {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: var(--accent);
   border-radius: 2px;
 }
 
 ::selection {
-  background: rgba(217, 191, 119, 0.25);
+  background: rgba(255, 90, 46, 0.28);
   color: var(--text);
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  /* Faint engineering grid — use on hero / section backgrounds for the
+     "technical" texture common to dev portfolios */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--divider) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--divider) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-grid-fade {
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
+  }
+
+  .text-gradient-accent {
+    background: linear-gradient(120deg, var(--accent), var(--gold));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }

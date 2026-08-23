@@ -32,7 +32,7 @@ export default function Home() {
         <Contact content={content.contact} />
       </main>
 
-      <Footer />
+      <Footer content={content} />
     </>
   )
 }

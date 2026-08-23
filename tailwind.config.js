@@ -46,9 +46,9 @@ module.exports = {
         },
       },
       fontFamily: {
-        display: ['var(--font-display)', 'serif'],
-        body: ['var(--font-body)', 'sans-serif'],
-        mono: ['var(--font-mono)', 'monospace'],
+        display: ['var(--font-display)', 'ui-sans-serif', 'sans-serif'],
+        body: ['var(--font-body)', 'ui-sans-serif', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       animation: {
         'fade-up': 'fadeUp 0.7s ease forwards',

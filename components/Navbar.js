@@ -3,11 +3,11 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { defaultContent } from '../lib/defaultContent'
 
 const navLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Journey', href: '#journey' },
-  { label: 'Contact', href: '#contact' },
+  { index: '01', label: 'About', href: '#about' },
+  { index: '02', label: 'Projects', href: '#projects' },
+  { index: '03', label: 'Skills', href: '#skills' },
+  { index: '04', label: 'Journey', href: '#journey' },
+  { index: '05', label: 'Contact', href: '#contact' },
 ]
 
 function ResumeIcon() {
@@ -158,25 +158,26 @@ export default function Navbar({ content = defaultContent }) {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
           <a
             href="#hero"
-            className="font-display text-[1.1rem] font-medium tracking-wide text-[var(--text)] transition-colors duration-300 hover:text-[var(--accent)]"
+            className="font-display text-[1.1rem] font-semibold tracking-wide text-[var(--text)] transition-colors duration-300 hover:text-[var(--accent)]"
           >
-            HK<span className="text-[var(--gold)]">.</span>
+            HK<span className="text-[var(--accent)]">.</span>
           </a>
 
-          <ul className="hidden items-center gap-8 md:flex">
-            {navLinks.map(({ label, href }) => (
+          <ul className="hidden items-center gap-7 md:flex">
+            {navLinks.map(({ index, label, href }) => (
               <li key={label}>
                 <a
                   href={href}
-                  className={`group relative font-body text-sm tracking-wide transition-colors duration-300 ${
+                  className={`group relative flex items-center gap-1.5 font-mono text-xs tracking-wide transition-colors duration-300 ${
                     activeSection === href.slice(1)
                       ? 'text-[var(--text)]'
                       : 'text-[var(--text-muted)] hover:text-[var(--text)]'
                   }`}
                 >
+                  <span className="text-[10px] text-[var(--text-soft)]">{index}</span>
                   {label}
                   <span
-                    className={`absolute -bottom-0.5 left-0 h-px bg-[var(--gold)] transition-all duration-300 ${
+                    className={`absolute -bottom-1.5 left-0 h-px bg-[var(--accent)] transition-all duration-300 ${
                       activeSection === href.slice(1) ? 'w-full' : 'w-0 group-hover:w-full'
                     }`}
                   />
@@ -191,7 +192,7 @@ export default function Navbar({ content = defaultContent }) {
             <a
               href={resume.url}
               download={resume.fileName}
-              className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+              className="inline-flex items-center gap-1.5 rounded-md border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
             >
               <ResumeIcon />
               Resume
@@ -201,7 +202,7 @@ export default function Navbar({ content = defaultContent }) {
               href={emailHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--accent)] hover:text-[var(--soft-bg)]"
+              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             >
               Say hello
             </a>
@@ -233,16 +234,17 @@ export default function Navbar({ content = defaultContent }) {
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-[var(--soft-bg)]/95 backdrop-blur-sm"
           >
-            {navLinks.map(({ label, href }, index) => (
+            {navLinks.map(({ index: idx, label, href }, i) => (
               <motion.a
                 key={label}
                 href={href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.07, duration: 0.4 }}
+                transition={{ delay: i * 0.07, duration: 0.4 }}
                 onClick={() => setMobileOpen(false)}
-                className="font-display text-4xl text-[var(--text)] transition-colors hover:text-[var(--accent)]"
+                className="flex items-center gap-3 font-display text-4xl font-semibold text-[var(--text)] transition-colors hover:text-[var(--accent)]"
               >
+                <span className="font-mono text-base text-[var(--text-soft)]">{idx}</span>
                 {label}
               </motion.a>
             ))}
@@ -254,7 +256,7 @@ export default function Navbar({ content = defaultContent }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.07, duration: 0.4 }}
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
             >
               <ResumeIcon />
               Resume
@@ -268,7 +270,7 @@ export default function Navbar({ content = defaultContent }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: (navLinks.length + 1) * 0.07, duration: 0.4 }}
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--accent)] hover:text-[var(--soft-bg)]"
+              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             >
               Say hello
             </motion.a>

@@ -37,6 +37,7 @@ export default function Skills({ categories = defaultContent.skills }) {
           }}
         >
           <SectionHeader
+            index="03"
             eyebrow="What I work with"
             heading="Tools I use"
             sub="Technologies I've worked with, built projects around, and continue to explore."
@@ -54,7 +55,7 @@ export default function Skills({ categories = defaultContent.skills }) {
                 delay: 0.1 + index * 0.08,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="group rounded-2xl border border-[color:var(--border)] bg-[var(--surface)]/50 p-6 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)]"
+              className="group rounded-lg border border-[color:var(--border)] bg-[var(--surface)]/50 p-6 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)]"
             >
               <div className="mb-5 flex items-center gap-2.5">
                 <span className="font-mono text-base text-[var(--gold)]">
@@ -88,9 +89,9 @@ export default function Skills({ categories = defaultContent.skills }) {
               delay: 0.55,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="flex min-h-[140px] flex-col items-center justify-center rounded-2xl border border-dashed border-[var(--divider)] p-6 text-center"
+            className="flex min-h-[140px] flex-col items-center justify-center rounded-lg border border-dashed border-[var(--divider)] p-6 text-center"
           >
-            <p className="mb-2 font-display text-2xl italic text-[var(--gold)]">
+            <p className="mb-2 font-display text-2xl font-semibold text-[var(--gold)]">
               Always learning
             </p>
 

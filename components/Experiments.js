@@ -36,7 +36,7 @@ export default function Experiments({ items = defaultContent.experiments }) {
               initial={{ opacity: 0, y: 20 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.1 + index * 0.09, ease: [0.16, 1, 0.3, 1] }}
-              className="group rounded-2xl border border-[color:var(--border)] bg-[var(--surface)] p-7 shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:shadow-[var(--card-shadow-strong)]"
+              className="group rounded-lg border border-[color:var(--border)] bg-[var(--surface)] p-7 shadow-[var(--card-shadow)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:shadow-[var(--card-shadow-strong)]"
             >
               <div className="mb-4 flex items-start justify-between">
                 <h3 className="font-body font-medium text-[var(--text)]">{title}</h3>

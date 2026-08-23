@@ -27,7 +27,7 @@ export default function Journey({ milestones = defaultContent.journey }) {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <SectionHeader eyebrow="So far" heading="The journey" sub="Still figuring things out. Still building." light />
+          <SectionHeader index="04" eyebrow="So far" heading="The journey" sub="Still figuring things out. Still building." light />
         </motion.div>
 
         <div className="relative">

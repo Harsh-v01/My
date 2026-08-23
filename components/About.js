@@ -42,6 +42,7 @@ export default function About({ content = defaultContent.about }) {
               }}
             >
               <SectionHeader
+                index="01"
                 eyebrow="About"
                 heading="A little about me"
               />
@@ -106,7 +107,7 @@ export default function About({ content = defaultContent.about }) {
                   delay: 0.1 + index * 0.12,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="group rounded-2xl border border-[color:var(--border)] bg-[var(--surface)]/60 p-6 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)]"
+                className="group rounded-lg border border-[color:var(--border)] bg-[var(--surface)]/60 p-6 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)]"
               >
                 <div className="flex items-start gap-4">
                   <span className="mt-0.5 shrink-0 font-mono text-xl text-[var(--gold)]">

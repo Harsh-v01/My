@@ -88,10 +88,10 @@ export default function Contact({ content = defaultContent.contact }) {
               delay: 0.1,
               ease: [0.16, 1, 0.3, 1],
             }}
-            className="mb-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-light leading-tight text-[var(--text)]"
+            className="mb-6 font-display text-[clamp(2.5rem,6vw,5rem)] font-semibold leading-tight tracking-tight text-[var(--text)]"
           >
             Let&apos;s{' '}
-            <span className="italic text-[var(--accent)]">
+            <span className="text-gradient-accent">
               Connect
             </span>
           </motion.h2>
@@ -124,7 +124,7 @@ export default function Contact({ content = defaultContent.contact }) {
                   duration: 0.5,
                   delay: 0.3 + index * 0.1,
                 }}
-                className="group flex w-full items-center gap-3 rounded-2xl border border-[color:var(--border)] bg-[var(--surface)]/60 px-5 py-3.5 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)] sm:w-auto"
+                className="group flex w-full items-center gap-3 rounded-lg border border-[color:var(--border)] bg-[var(--surface)]/60 px-5 py-3.5 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)] sm:w-auto"
               >
                 <span className="text-[var(--text-soft)] transition-colors group-hover:text-[var(--accent)]">
                   {icons[key] ?? icons.other}
