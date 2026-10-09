@@ -9,7 +9,6 @@ import Experiments from '../components/Experiments'
 import Contact from '../components/Contact'
 import Footer from '../components/Footer'
 import { useContent } from '../lib/useContent'
-import PortfolioAtmosphere from '../components/PortfolioAtmosphere'
 export default function Home() {
   const { content } = useContent()
 
@@ -23,7 +22,6 @@ export default function Home() {
       <Navbar content={content} />
 
       <main className="relative theme-transition bg-[var(--bg)] text-[var(--text)]">
-      <PortfolioAtmosphere />
         <Hero content={content.hero} resume={content.resume} />
         <About content={content.about} />
         <Projects projects={content.projects} />
