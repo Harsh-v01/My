@@ -4,9 +4,7 @@ const themeScript = `
 (function () {
   try {
     const stored = window.localStorage.getItem('theme')
-    // Dark is the primary, designed-for aesthetic of this portfolio —
-    // default to it unless the visitor has explicitly picked light mode.
-    const isDark = stored ? stored === 'dark' : true
+    const isDark = stored ? stored === 'dark' : false
     document.documentElement.classList.toggle('dark', isDark)
     document.documentElement.style.colorScheme = isDark ? 'dark' : 'light'
   } catch (error) {}

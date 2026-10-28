@@ -1,335 +1,189 @@
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
-import { useInView } from './useInView'
-import SectionHeader from './SectionHeader'
 import { defaultContent } from '../lib/defaultContent'
+import SectionDecor from './SectionDecor'
 
 function GithubIcon() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
       <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.28-.01-1.04-.01-2.04-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.4s2.04.13 3 .4c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.69.83.57C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0Z" />
     </svg>
   )
 }
 
-function ProjectCard({ project, index }) {
-  const [hovered, setHovered] = useState(false)
+const STAGES = [
+  'linear-gradient(145deg, #E8EEF5 0%, #F4F1EA 50%, #EDE8F5 100%)',
+  'linear-gradient(145deg, #EAF5F0 0%, #F5F0E8 50%, #E8F0F5 100%)',
+  'linear-gradient(145deg, #F5EDE8 0%, #F0EAF5 50%, #E8F0EE 100%)',
+  'linear-gradient(145deg, #E8F0F5 0%, #F5F2E8 55%, #EEE8F5 100%)',
+  'linear-gradient(145deg, #F0E8F5 0%, #E8F5F0 50%, #F5EFE8 100%)',
+]
 
+function isPhoneProject(project) {
+  if (project.device === 'browser' || project.device === 'web') return false
+  if (project.device === 'phone') return true
+
+  const stack = (project.stack || []).join(' ').toLowerCase()
+  const name = (project.name || '').toLowerCase()
+
+  if (name.includes('year progress')) return false
+
+  return stack.includes('android') || stack.includes('kotlin') || stack.includes('flutter')
+}
+
+function BrowserChrome({ title }) {
   return (
-    <div className="group relative h-full">
-      {/* Ambient glow */}
-      <div
-        className="
-          pointer-events-none absolute -inset-3 rounded-2xl
-          bg-[radial-gradient(circle,var(--hero-glow-warm),transparent_65%)]
-          opacity-0 blur-2xl transition-opacity duration-500
-          group-hover:opacity-[0.12]
-          dark:group-hover:opacity-[0.18]
-        "
-      />
-
-      <motion.article
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => setHovered(false)}
-        animate={{ y: hovered ? -4 : 0 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="
-          relative flex h-full flex-col overflow-hidden rounded-2xl
-          border border-[color:var(--border)]
-          bg-[color:var(--soft-bg)]
-          shadow-sm
-          dark:shadow-[0_15px_45px_rgba(0,0,0,0.18)]
-        "
-      >
-        {/* Image */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-[color:var(--soft-bg)]">
-          <motion.img
-            src={project.image}
-            alt={`${project.name} project preview`}
-            className="h-full w-full object-contain"
-            animate={{ scale: hovered ? 1.035 : 1 }}
-            transition={{ duration: 0.65 }}
-          />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-
-          <span
-            className="
-              absolute left-3 top-3 flex h-8 min-w-8 items-center
-              justify-center rounded-full border border-white/20
-              bg-black/45 px-2 font-mono text-[10px]
-              tracking-widest text-white/80 backdrop-blur-md
-            "
-          >
-            {String(index + 1).padStart(2, '0')}
-          </span>
-
-          <motion.span
-            animate={{ opacity: hovered ? 1 : 0, x: hovered ? 0 : 5 }}
-            transition={{ duration: 0.25 }}
-            className="absolute right-4 top-4 text-sm text-[var(--accent)]"
-          >
-            ↗
-          </motion.span>
-        </div>
-
-        {/* Content */}
-        <div className="flex min-h-[300px] flex-1 flex-col p-5">
-          <h3 className="font-display text-xl font-semibold text-[color:var(--text)]">
-            {project.name}
-          </h3>
-
-          <p className="mt-1 truncate text-xs text-[color:var(--text-muted)]">
-            {project.tagline}
-          </p>
-
-          <div className="mt-4 h-px w-9 bg-[var(--gold)]" />
-
-          <p className="mt-4 min-h-[72px] line-clamp-4 text-xs leading-[18px] text-[color:var(--text-soft)]">
-            {project.desc}
-          </p>
-
-          <div className="mt-5 flex flex-wrap gap-1.5">
-            {project.stack.slice(0, 5).map((tech) => (
-              <span
-                key={tech}
-                className="
-                  whitespace-nowrap rounded-full
-                  border border-[color:var(--border)]
-                  bg-[color:var(--page-bg)]
-                  px-2.5 py-1 font-mono text-[9px]
-                  text-[color:var(--text-muted)]
-                "
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-auto flex gap-2 pt-6">
-            {project.github && (
-              <a
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  inline-flex items-center gap-1.5 rounded-full
-                  border border-[color:var(--border)]
-                  px-3.5 py-2 text-[10px]
-                  text-[color:var(--text-soft)]
-                  transition hover:border-[color:var(--text-muted)]
-                  hover:text-[color:var(--text)]
-                "
-              >
-                <GithubIcon />
-                GitHub
-              </a>
-            )}
-
-            {project.live && (
-              <a
-                href={project.live}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  inline-flex items-center gap-1.5 rounded-full
-                  bg-[color:var(--text)]
-                  px-3.5 py-2 text-[10px] font-medium
-                  text-[color:var(--page-bg)]
-                  transition hover:bg-[var(--accent)] hover:text-white
-                "
-              >
-                Live Demo ↗
-              </a>
-            )}
-          </div>
-        </div>
-
-        <div
-          className="
-            pointer-events-none absolute inset-0 rounded-2xl
-            border border-[var(--accent)]
-            opacity-0 transition-opacity duration-300
-            group-hover:opacity-30
-          "
-        />
-      </motion.article>
+    <div className="flex items-center gap-2 border-b border-black/5 bg-white/80 px-3 py-2 dark:border-white/10 dark:bg-black/40">
+      <div className="flex gap-1.5">
+        <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F57]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-[#28C840]" />
+      </div>
+      <div className="mx-auto flex min-w-0 max-w-[70%] flex-1 items-center justify-center rounded-md bg-black/[0.04] px-3 py-1 dark:bg-white/10">
+        <span className="truncate font-mono text-[10px] text-[var(--text-soft)]">{title}</span>
+      </div>
     </div>
   )
 }
 
-export default function Projects({
-  projects = defaultContent.projects,
-}) {
-  const [ref, inView] = useInView()
-  const projectSet = projects.slice(0, 5)
-  const [mobileIndex, setMobileIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
+function PhoneChrome() {
+  return (
+    <div className="flex items-center justify-center bg-black/80 px-3 py-2">
+      <div className="h-1.5 w-16 rounded-full bg-white/25" />
+    </div>
+  )
+}
 
-  useEffect(() => {
-    if (paused || projectSet.length <= 1) return
-
-    const timer = setInterval(() => {
-      setMobileIndex((i) => (i + 1) % projectSet.length)
-    }, 4500)
-
-    return () => clearInterval(timer)
-  }, [paused, projectSet.length])
-
-  const changeSlide = (direction) => {
-    setMobileIndex((i) =>
-      Math.max(
-        0,
-        Math.min(projectSet.length - 1, i + direction)
-      )
-    )
-  }
+function ScreenshotStage({ project, index, featured }) {
+  const phone = isPhoneProject(project)
+  const stage = STAGES[index % STAGES.length]
 
   return (
-    <section
-      id="projects"
-      className="relative overflow-hidden bg-[color:var(--page-bg)] py-24 lg:py-32"
+    <div
+      className={`relative overflow-hidden ${
+        featured
+          ? 'aspect-[16/10] sm:aspect-[16/9]'
+          : phone
+            ? 'aspect-[4/5] sm:aspect-[10/12]'
+            : 'aspect-[16/11]'
+      }`}
+      style={{ background: stage }}
     >
-      <div
-        className="
-          pointer-events-none absolute -left-40 top-24
-          h-[500px] w-[500px] rounded-full blur-3xl
-          opacity-[0.05] dark:opacity-[0.08]
-        "
-        style={{
-          background:
-            'radial-gradient(circle,var(--hero-glow-warm),transparent 70%)',
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.7),transparent_55%)] dark:bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.06),transparent_55%)]" />
 
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="mx-auto max-w-6xl px-6">
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7 }}
-          >
-            <SectionHeader
-              index="02"
-              eyebrow="Work"
-              heading="Featured Projects"
-              sub="Things I've built, shipped, and learned from along the way."
+      <div className={`absolute inset-0 flex items-center justify-center ${featured ? 'p-6 sm:p-10 md:p-12' : 'p-5 sm:p-7'}`}>
+        <div
+          className={`relative overflow-hidden bg-[var(--surface)] shadow-[0_25px_60px_-20px_rgba(0,0,0,0.35)] transition-transform duration-700 ease-out group-hover:-translate-y-1 group-hover:scale-[1.02] ${
+            phone
+              ? 'w-[58%] max-w-[240px] rounded-[1.6rem] border-[3px] border-[#1a1a1a] sm:w-[52%]'
+              : 'w-full max-w-[920px] rounded-xl border border-black/10 sm:rounded-2xl dark:border-white/10'
+          }`}
+        >
+          {phone ? <PhoneChrome /> : <BrowserChrome title={project.name} />}
+
+          <div className={`bg-[var(--bg)] ${phone ? 'aspect-[9/16]' : ''}`}>
+            <img
+              src={project.image}
+              alt={`${project.name} preview`}
+              className={`block w-full ${phone ? 'h-full object-cover object-top' : 'h-auto object-contain object-top'}`}
+              loading="lazy"
+              decoding="async"
             />
-          </motion.div>
+          </div>
         </div>
+      </div>
+    </div>
+  )
+}
 
-        {/* Desktop */}
-        <div className="mx-auto mt-14 hidden max-w-6xl px-6 md:block">
-          <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
-            {projectSet.map((project, index) => (
-              <motion.div
-                key={`${project.name}-${index}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.08,
-                }}
-              >
-                <ProjectCard project={project} index={index} />
-              </motion.div>
+function ProjectCard({ project, index, featured = false }) {
+  const num = project.index || String(index + 1).padStart(2, '0')
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.55, delay: index * 0.05, ease: [0.16, 1, 0.3, 1] }}
+      className={`group overflow-hidden rounded-[1.75rem] border border-[color:var(--border)] bg-[var(--surface)] shadow-[var(--card-shadow)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[color:var(--border-strong)] hover:shadow-[var(--card-shadow-strong)] ${
+        featured ? 'col-span-full' : ''
+      }`}
+    >
+      <ScreenshotStage project={project} index={index} featured={featured} />
+
+      <div className={`flex flex-col gap-4 p-6 sm:flex-row sm:items-end sm:justify-between ${featured ? 'sm:p-8 lg:px-10 lg:pb-10' : 'sm:p-6'}`}>
+        <div className="min-w-0 max-w-2xl">
+          <div className="mb-2 flex flex-wrap items-center gap-3">
+            <span className="font-mono text-[11px] tracking-[0.16em] text-[var(--text-soft)]">{num}</span>
+            <span className="font-mono text-[11px] text-[var(--accent)]">{project.tagline}</span>
+          </div>
+          <h3 className={`font-display font-semibold tracking-tight text-[var(--text)] ${featured ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
+            {project.name}
+          </h3>
+          <p className="mt-2 text-sm leading-relaxed text-[var(--text-muted)]">{project.desc}</p>
+          <div className="mt-4 flex flex-wrap gap-1.5">
+            {(project.stack || []).slice(0, 5).map((tech) => (
+              <span key={tech} className="rounded-full bg-[var(--soft-bg)] px-2.5 py-1 font-mono text-[10px] text-[var(--text-soft)]">
+                {tech}
+              </span>
             ))}
           </div>
         </div>
 
-        {/* Mobile */}
-        <div className="mt-12 md:hidden">
-          <div
-            className="px-4"
-            onTouchStart={() => setPaused(true)}
-          >
-            <ProjectCard
-              project={projectSet[mobileIndex]}
-              index={mobileIndex}
-            />
-          </div>
-
-          <div className="mt-5 flex items-center justify-between px-5">
-            <button
-              onClick={() => changeSlide(-1)}
-              disabled={mobileIndex === 0}
-              className="text-xs text-[color:var(--text-muted)] disabled:opacity-30"
+        <div className="flex shrink-0 flex-wrap gap-2">
+          {project.github && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-magnetic inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border-strong)] px-4 py-2 text-[12px] text-[var(--text-muted)] transition hover:border-[var(--text)] hover:text-[var(--text)]"
             >
-              ←
-            </button>
+              <GithubIcon />
+              Code
+            </a>
+          )}
+          {project.live && (
+            <a
+              href={project.live}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-magnetic inline-flex items-center gap-1 rounded-full bg-[var(--text)] px-4 py-2 text-[12px] font-medium text-[var(--bg)] transition hover:bg-[var(--accent)]"
+            >
+              Live →
+            </a>
+          )}
+        </div>
+      </div>
+    </motion.article>
+  )
+}
 
-            <div className="flex gap-1.5">
-              {projectSet.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setMobileIndex(i)
-                    setPaused(true)
-                  }}
-                  aria-label={`Show project ${i + 1}`}
-                  className={`h-1 rounded-full transition-all ${
-                    i === mobileIndex
-                      ? 'w-6 bg-[var(--accent)]'
-                      : 'w-2 bg-[color:var(--border)]'
-                  }`}
-                />
+export default function Projects({ projects = defaultContent.projects }) {
+  const list = projects?.length ? projects : defaultContent.projects
+  const [featured, ...rest] = list
+
+  return (
+    <section id="projects" className="relative scroll-mt-24 overflow-hidden py-16 sm:py-20">
+      <SectionDecor ghost="WORK" />
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        <div className="mb-10 max-w-xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--text-soft)]">Work</p>
+          <h2 className="mt-2 font-display text-3xl font-semibold tracking-tight text-[var(--text)] sm:text-4xl">
+            Selected projects
+          </h2>
+          <p className="mt-3 text-sm text-[var(--text-muted)]">
+            Real builds — framed as product panels, not a dump of raw screenshots.
+          </p>
+        </div>
+
+        <div className="flex flex-col gap-6">
+          {featured && <ProjectCard project={featured} index={0} featured />}
+          {rest.length > 0 && (
+            <div className="grid gap-6 sm:grid-cols-2">
+              {rest.map((project, index) => (
+                <ProjectCard key={project.name + index} project={project} index={index + 1} />
               ))}
             </div>
-
-            <button
-              onClick={() => changeSlide(1)}
-              disabled={mobileIndex === projectSet.length - 1}
-              className="text-xs text-[color:var(--text-muted)] disabled:opacity-30"
-            >
-              →
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom cards */}
-        <div className="mx-auto mt-16 grid max-w-6xl gap-5 px-6 md:grid-cols-2">
-          {[
-            ['06 / NEXT', 'More to come', 'The stack keeps growing with every experiment, idea, and problem worth solving.'],
-            ['07 / OPEN', 'Have an idea?', "I'm always open to interesting ideas, collaborations, and things worth building together."],
-          ].map(([label, title, text]) => (
-            <div
-              key={title}
-              className="
-                flex min-h-[190px] flex-col items-center justify-center
-                rounded-xl border border-dashed border-[color:var(--border)]
-                bg-[color:var(--soft-bg)] p-8 text-center
-              "
-            >
-              <span className="mb-3 font-mono text-[9px] tracking-[0.25em] text-[color:var(--gold)]">
-                {label}
-              </span>
-
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] text-xl text-[color:var(--gold)]">
-                +
-              </div>
-
-              <p className="font-display text-xl font-semibold text-[color:var(--text)]">
-                {title}
-              </p>
-
-              <p className="mt-2 max-w-sm text-xs leading-relaxed text-[color:var(--text-soft)]">
-                {text}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center">
-          <a
-            href="https://github.com/Harsh-v01"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-[color:var(--text-muted)] transition hover:text-[color:var(--text)]"
-          >
-            View all on GitHub <span className="text-[color:var(--gold)]">→</span>
-          </a>
+          )}
         </div>
       </div>
     </section>

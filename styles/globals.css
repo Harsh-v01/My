@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Inter:wght@300..700&family=JetBrains+Mono:wght@300..600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=Inter:wght@400..600&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,76 +9,68 @@
   --font-body: 'Inter';
   --font-mono: 'JetBrains Mono';
 
-  /* Light mode — kept minimal, dark is the primary aesthetic */
-  --bg: #FAFAF8;
-  --surface: #F2F1EC;
-  --soft-bg: #EEEDE6;
+  /* Soft product light — bento base */
+  --bg: #F3F2EE;
+  --surface: #FFFFFF;
+  --soft-bg: #EBEAE5;
   --card: #FFFFFF;
-  --page-bg: #FAFAF8;
-  --text: #101114;
-  --text-muted: #55575E;
-  --text-soft: #8A8C93;
-  --accent: #D9491E;
-  --gold: #A9812F;
-  --border: rgba(16, 17, 20, 0.1);
-  --border-strong: rgba(16, 17, 20, 0.2);
-  --divider: rgba(16, 17, 20, 0.14);
-  --hero-ring: rgba(16, 17, 20, 0.25);
-  --hero-shadow: 0 20px 60px -20px rgba(16, 17, 20, 0.25);
-  --card-shadow: 0 8px 30px rgba(16, 17, 20, 0.05);
-  --card-shadow-strong: 0 12px 42px rgba(16, 17, 20, 0.09);
-  --hero-overlay: rgba(16, 17, 20, 0.05);
-  --hero-glow-warm: #D9491E;
-  --hero-glow-cool: #2F6F5E;
-  --glow-gold: #A9812F;
-  --glow-terracotta: #D9491E;
-  --glow-blue: #2F6F5E;
-  --journey-bg: #101114;
-  --journey-text: #F2F1EC;
-  --particle-bg: #FAFAF8;
-  --particle-dot: 16, 17, 20;
-  --particle-line: 217, 73, 30;
-  --particle-halo: 242, 241, 236;
-  --particle-dot-opacity: 0.7;
-  --particle-line-opacity: 0.35;
-  --particle-halo-opacity: 0.14;
+  --page-bg: #F3F2EE;
+  --text: #121316;
+  --text-muted: #5C5E66;
+  --text-soft: #8B8D96;
+  --accent: #E84E1B;
+  --gold: #C9A227;
+  --border: rgba(18, 19, 22, 0.08);
+  --border-strong: rgba(18, 19, 22, 0.16);
+  --divider: rgba(18, 19, 22, 0.1);
+  --hero-shadow: 0 20px 50px -24px rgba(18, 19, 22, 0.2);
+  --card-shadow: 0 4px 24px rgba(18, 19, 22, 0.04);
+  --card-shadow-strong: 0 12px 40px rgba(18, 19, 22, 0.08);
+  --hero-glow-warm: #E84E1B;
+  --hero-glow-cool: #2A6B5A;
+  --glow-gold: #C9A227;
+  --glow-terracotta: #E84E1B;
+  --glow-blue: #2A6B5A;
+  --journey-bg: #121316;
+  --journey-text: #F3F2EE;
+  --particle-bg: #F3F2EE;
+  --particle-dot: 18, 19, 22;
+  --particle-line: 232, 78, 27;
+  --particle-dot-opacity: 0.25;
+  --particle-line-opacity: 0.12;
   color-scheme: light;
 }
 
 html.dark {
-  /* Primary aesthetic: near-black, high-contrast, one signal accent */
-  --bg: #08090B;
-  --surface: #101114;
-  --soft-bg: #16171B;
-  --card: #101114;
-  --page-bg: #08090B;
-  --text: #F3F2ED;
-  --text-muted: #9B9CA3;
-  --text-soft: #64656C;
+  /* Optional dark — still bento, elevated cards */
+  --bg: #0B0C0E;
+  --surface: #141518;
+  --soft-bg: #1A1B1F;
+  --card: #141518;
+  --page-bg: #0B0C0E;
+  --text: #F2F1EC;
+  --text-muted: #9A9BA3;
+  --text-soft: #6B6C74;
   --accent: #FF5A2E;
   --gold: #E8C468;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-strong: rgba(255, 255, 255, 0.18);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
   --divider: rgba(255, 255, 255, 0.08);
-  --hero-ring: rgba(0, 0, 0, 0.6);
-  --hero-shadow: 0 24px 70px -28px rgba(0, 0, 0, 0.85);
-  --card-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-  --card-shadow-strong: 0 16px 46px rgba(0, 0, 0, 0.5);
-  --hero-overlay: rgba(8, 9, 11, 0.15);
+  --hero-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+  --card-shadow-strong: 0 16px 48px rgba(0, 0, 0, 0.4);
   --hero-glow-warm: #FF5A2E;
   --hero-glow-cool: #3E7C68;
   --glow-gold: #E8C468;
   --glow-terracotta: #FF5A2E;
   --glow-blue: #3E7C68;
-  --journey-bg: #101114;
-  --journey-text: #F3F2ED;
-  --particle-bg: #08090B;
-  --particle-dot: 155, 156, 163;
+  --journey-bg: #141518;
+  --journey-text: #F2F1EC;
+  --particle-bg: #0B0C0E;
+  --particle-dot: 160, 161, 168;
   --particle-line: 255, 90, 46;
-  --particle-halo: 232, 196, 104;
-  --particle-dot-opacity: 0.4;
-  --particle-line-opacity: 0.16;
-  --particle-halo-opacity: 0.08;
+  --particle-dot-opacity: 0.28;
+  --particle-line-opacity: 0.1;
   color-scheme: dark;
 }
 
@@ -100,64 +92,83 @@ body {
   font-size: 16px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  transition: background-color 250ms ease, color 250ms ease;
 }
 
-.theme-transition,
-.theme-transition * {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease, fill 250ms ease;
-}
-
-a,
-button,
-input,
-textarea,
-select {
-  transition: background-color 250ms ease, color 250ms ease, border-color 250ms ease, box-shadow 250ms ease, fill 250ms ease;
-}
-
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--accent);
-  border-radius: 2px;
-}
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
 
 ::selection {
-  background: rgba(255, 90, 46, 0.28);
+  background: rgba(232, 78, 27, 0.22);
   color: var(--text);
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Faint engineering grid — use on hero / section backgrounds for the
-     "technical" texture common to dev portfolios */
-  .bg-grid {
-    background-image:
-      linear-gradient(to right, var(--divider) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--divider) 1px, transparent 1px);
-    background-size: 56px 56px;
-  }
-
-  .bg-grid-fade {
-    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%);
-  }
-
   .text-gradient-accent {
     background: linear-gradient(120deg, var(--accent), var(--gold));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
+
+  .bento-card {
+    @apply rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] shadow-[var(--card-shadow)];
+  }
+}
+
+/* Magnetic / soft press */
+.btn-magnetic {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.btn-magnetic:active {
+  transform: scale(0.97);
+}
+
+/* Skill marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Optional soft custom cursor (desktop only) */
+@media (pointer: fine) {
+  .has-custom-cursor,
+  .has-custom-cursor * {
+    cursor: none;
+  }
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+}
+
+.cursor-dot.is-hover {
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: 1.5px solid var(--accent);
 }

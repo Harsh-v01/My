@@ -1,15 +1,12 @@
 import { motion } from 'framer-motion'
-import Particles from './Particles'
 import { defaultContent } from '../lib/defaultContent'
+import SkillMarquee from './SkillMarquee'
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 32 },
+const ease = [0.16, 1, 0.3, 1]
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 18 },
   animate: { opacity: 1, y: 0 },
-  transition: {
-    duration: 0.8,
-    delay,
-    ease: [0.16, 1, 0.3, 1],
-  },
+  transition: { duration: 0.7, delay, ease },
 })
 
 export default function Hero({ content = defaultContent.hero, resume = defaultContent.resume }) {
@@ -22,178 +19,186 @@ export default function Hero({ content = defaultContent.hero, resume = defaultCo
     photo = defaultContent.hero.photo,
   } = content
 
+  const editorial =
+    'I build to understand. I ship to learn. I care about the problem before the stack.'
+  const currentlyBuilding =
+    'Exploring AI workflows, automation, and product-shaped software.'
+
   return (
-    <section id="hero" className="relative isolate min-h-screen overflow-hidden bg-[var(--bg)]">
-      <div className="absolute inset-0 z-0 overflow-hidden bg-[var(--bg)]">
-        <div className="absolute inset-0 bg-grid bg-grid-fade opacity-70" />
-
-        <Particles className="absolute inset-0" />
-
-        <div
-          className="absolute right-[-10%] top-[-15%] h-[50vw] w-[50vw] rounded-full opacity-[0.14] blur-3xl"
-          style={{ background: 'radial-gradient(circle, var(--hero-glow-warm) 0%, transparent 70%)' }}
-        />
-
-        <div
-          className="absolute bottom-[-20%] left-[-12%] h-[40vw] w-[40vw] rounded-full opacity-[0.08] blur-3xl"
-          style={{ background: 'radial-gradient(circle, var(--hero-glow-cool) 0%, transparent 70%)' }}
-        />
-
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat',
-            backgroundSize: '256px 256px',
-          }}
-        />
-      </div>
-
-      <div className="relative z-10 mx-auto w-full max-w-6xl px-6 pb-24 pt-32 lg:pb-16 lg:pt-36">
-        <div className="grid items-start gap-12 lg:grid-cols-[1.3fr_1fr] lg:gap-16">
-          <div className="max-w-3xl">
-            <motion.div {...fadeUp(0.1)} className="mb-6 flex flex-wrap items-center gap-3 lg:mb-8">
-              <span className="font-mono text-xs tracking-[0.12em] text-[var(--accent)]">[01]</span>
-              <span className="inline-block h-px w-6 bg-[color:var(--border-strong)]" />
-              <span className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--text-soft)]">
-                {role}
-              </span>
-            </motion.div>
-
-            <motion.h1
-              {...fadeUp(0.2)}
-              className="mb-6 font-display text-[clamp(2.9rem,9vw,6.2rem)] font-semibold leading-[0.98] tracking-tight text-[var(--text)]"
-            >
-              {firstName}
-              <br />
-              <span className="text-gradient-accent">{lastName}.</span>
-            </motion.h1>
-
-            <motion.p
-              {...fadeUp(0.35)}
-              className="mb-9 max-w-sm font-body text-lg leading-relaxed text-[var(--text-muted)] lg:mb-10"
-            >
-              {tagline}
-            </motion.p>
-
-            <motion.div {...fadeUp(0.42)} className="mb-9 flex items-center gap-2.5 lg:mb-10">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-60" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent)]" />
-              </span>
-              <span className="font-mono text-xs tracking-wide text-[var(--text-soft)]">
-                Open to opportunities &middot; based in Pune, IN
-              </span>
-            </motion.div>
-
-            <motion.div {...fadeUp(0.5)} className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <a
-                href="#projects"
-                className="group inline-flex items-center gap-2 rounded-md bg-[var(--text)] px-5 py-3 font-body text-sm font-medium tracking-wide text-[var(--bg)] transition-colors duration-300 hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:px-6"
-              >
-                View Projects
-                <span className="inline-block transition-transform duration-300 group-hover:translate-x-0.5">
-                  &rarr;
-                </span>
-              </a>
-
-              <a
-                href="#contact"
-                className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border-strong)] px-5 py-3 font-body text-sm font-medium tracking-wide text-[var(--text)] transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)] sm:px-6"
-              >
-                Contact
-              </a>
-
-              <a
-                href={resume.url}
-                download={resume.fileName}
-                className="group inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-3 font-body text-sm font-medium tracking-wide text-[var(--text-muted)] transition-colors duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)] sm:px-6"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="transition-transform duration-300 group-hover:translate-y-0.5">
-                  <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 21h16" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                Resume
-              </a>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="relative mt-14 lg:hidden"
-            >
-              <div className="relative mx-auto aspect-[4/5] w-full max-w-[280px] sm:max-w-sm">
-                <div className="absolute -right-3 -top-3 h-full w-full rounded-lg border border-[color:var(--border-strong)]" />
-
-                <div className="absolute inset-0 overflow-hidden rounded-lg" style={{ boxShadow: 'var(--hero-shadow)' }}>
-                  <img
-                    src={photo}
-                    alt={`${firstName} ${lastName}`}
-                    className="h-full w-full bg-[var(--soft-bg)] object-contain object-top"
-                    style={{ filter: 'grayscale(35%) contrast(1.08)' }}
-                  />
-
-                  <div className="absolute inset-0 mix-blend-color" style={{ backgroundColor: 'var(--hero-overlay)' }} />
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              {...fadeUp(0.65)}
-              className="mt-14 flex items-center justify-between gap-8 border-t border-[color:var(--border)] pt-8 sm:justify-start sm:gap-12 lg:mt-16 lg:pt-9"
-            >
-              {stats.map(({ num, label }) => (
-                <div key={label}>
-                  <p className="font-display text-3xl font-semibold text-[var(--text)]">{num}</p>
-                  <p className="mt-0.5 font-mono text-[11px] uppercase tracking-wide text-[var(--text-soft)]">{label}</p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative hidden lg:block"
+    <section id="hero" className="relative pt-28 pb-6 sm:pt-32">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-10 max-w-3xl">
+          <motion.p
+            {...fade(0.05)}
+            className="mb-4 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--text-soft)]"
           >
-            <div className="relative ml-auto aspect-[4/5] max-w-sm">
-              <div className="absolute -right-4 -top-4 h-full w-full rounded-lg border border-[color:var(--border-strong)]" />
+            {role}
+          </motion.p>
 
-              <span className="absolute -left-3 top-6 z-10 -rotate-90 font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--text-soft)]">
-                {firstName}.{lastName}
-              </span>
+          <motion.h1
+            {...fade(0.1)}
+            className="font-display text-[clamp(2.8rem,8vw,5.25rem)] font-semibold leading-[0.95] tracking-[-0.03em] text-[var(--text)]"
+          >
+            {firstName}{' '}
+            <span className="text-gradient-accent">{lastName}</span>
+          </motion.h1>
 
-              <div className="absolute inset-0 overflow-hidden rounded-lg" style={{ boxShadow: 'var(--hero-shadow)' }}>
-                <img
-                  src={photo}
-                  alt={`${firstName} ${lastName}`}
-                  className="h-full w-full bg-[var(--soft-bg)] object-contain object-top"
-                  style={{ filter: 'grayscale(35%) contrast(1.08)' }}
-                />
+          <motion.p
+            {...fade(0.18)}
+            className="mt-5 max-w-xl text-lg leading-relaxed text-[var(--text)] sm:text-xl"
+          >
+            {editorial}
+          </motion.p>
 
-                <div className="absolute inset-0 mix-blend-color" style={{ backgroundColor: 'var(--hero-overlay)' }} />
-              </div>
+          <motion.p {...fade(0.24)} className="mt-3 max-w-md text-[var(--text-muted)]">
+            {tagline}
+          </motion.p>
+
+          <motion.div {...fade(0.3)} className="mt-8 flex flex-wrap items-center gap-3">
+            <a
+              href="#projects"
+              className="btn-magnetic rounded-full bg-[var(--text)] px-6 py-3 text-sm font-medium text-[var(--bg)] hover:bg-[var(--accent)] hover:shadow-[0_0_24px_rgba(232,78,27,0.25)]"
+            >
+              View work →
+            </a>
+            <a
+              href="#contact"
+              className="btn-magnetic rounded-full border border-[color:var(--border-strong)] px-6 py-3 text-sm text-[var(--text)] hover:border-[var(--accent)] hover:text-[var(--accent)]"
+            >
+              Contact
+            </a>
+            <a
+              href={resume?.url || '/resume.pdf'}
+              download={resume?.fileName}
+              className="btn-magnetic rounded-full px-4 py-3 font-mono text-[11px] text-[var(--text-soft)] hover:text-[var(--accent)]"
+            >
+              ↓ Resume
+            </a>
+          </motion.div>
+        </div>
+
+        <div className="grid gap-4 lg:grid-cols-12">
+          <motion.div
+            {...fade(0.32)}
+            className="h-full overflow-hidden rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] shadow-[var(--card-shadow)] lg:col-span-4"
+          >
+            <div className="aspect-[4/5] lg:aspect-auto lg:h-full lg:min-h-[320px]">
+              <img
+                src={photo}
+                alt={`${firstName} ${lastName}`}
+                className="h-full w-full object-cover object-top"
+                loading="eager"
+              />
             </div>
           </motion.div>
+
+          <div className="flex h-full flex-col gap-4 lg:col-span-8">
+            <motion.div
+              {...fade(0.36)}
+              className="rounded-3xl bg-[var(--text)] px-6 py-5 text-[var(--bg)] sm:px-8 sm:py-6"
+            >
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--bg)]/55">
+                Currently building
+              </p>
+              <p className="mt-2 max-w-xl text-base leading-relaxed sm:text-lg">
+                {currentlyBuilding}
+              </p>
+              <div className="mt-4 flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-60" />
+                  <span className="relative h-2 w-2 rounded-full bg-[var(--accent)]" />
+                </span>
+                <span className="font-mono text-[11px] text-[var(--bg)]/60">
+                  Open to opportunities · Pune, IN
+                </span>
+              </div>
+            </motion.div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              {(stats || []).slice(0, 3).map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  {...fade(0.4 + index * 0.05)}
+                  className="rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] p-4 shadow-[var(--card-shadow)] sm:p-6"
+                >
+                  <div className="font-display text-2xl font-semibold tracking-tight text-[var(--text)] sm:text-3xl">
+                    {stat.num}
+                  </div>
+                  <div className="mt-1 font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-soft)] sm:text-[10px]">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+
+              {(!stats || stats.length < 3) && (
+                <motion.div
+                  {...fade(0.5)}
+                  className="rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] p-4 shadow-[var(--card-shadow)] sm:p-5"
+                >
+                  <p className="font-mono text-[9px] uppercase tracking-[0.14em] text-[var(--text-soft)]">
+                    Stack focus
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {['React', 'Next.js', 'Python', 'Firebase', 'AI'].map((technology) => (
+                      <span
+                        key={technology}
+                        className="rounded-full bg-[var(--soft-bg)] px-2 py-0.5 font-mono text-[10px] text-[var(--text-soft)]"
+                      >
+                        {technology}
+                      </span>
+                    ))}
+                  </div>
+                </motion.div>
+              )}
+            </div>
+
+            <motion.div
+              {...fade(0.55)}
+              className="flex flex-1 flex-col justify-between gap-4 rounded-3xl border border-[color:var(--border)] bg-[var(--surface)] p-5 shadow-[var(--card-shadow)] sm:p-6"
+            >
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--text-soft)]">
+                  Principle
+                </p>
+                <p className="mt-2 max-w-sm font-display text-lg font-semibold leading-snug tracking-tight text-[var(--text)] sm:text-xl">
+                  Problem first. Then the stack.
+                </p>
+                <p className="mt-2 text-sm text-[var(--text-muted)]">
+                  I care about what we&apos;re solving before how we build it.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <a
+                  href="https://github.com/harsh-v01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-magnetic rounded-full border border-[color:var(--border)] px-3 py-1.5 font-mono text-[11px] text-[var(--text-soft)] transition hover:border-[var(--text)] hover:text-[var(--text)]"
+                >
+                  GitHub
+                </a>
+                <a
+                  href="https://linkedin.com/in/harsh015"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-magnetic rounded-full border border-[color:var(--border)] px-3 py-1.5 font-mono text-[11px] text-[var(--text-soft)] transition hover:border-[var(--text)] hover:text-[var(--text)]"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="#projects"
+                  className="btn-magnetic rounded-full bg-[var(--text)] px-3 py-1.5 font-mono text-[11px] text-[var(--bg)] transition hover:bg-[var(--accent)]"
+                >
+                  View work →
+                </a>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"
-      >
-        <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[var(--text-soft)]">
-          scroll
-        </span>
-
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-          className="h-8 w-px bg-gradient-to-b from-[var(--accent)] to-transparent"
-        />
+      <motion.div {...fade(0.5)} className="mt-10">
+        <SkillMarquee />
       </motion.div>
     </section>
   )

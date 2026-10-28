@@ -78,7 +78,7 @@ export default function Navbar({ content = defaultContent }) {
 
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('')
+  const [activeSection, setActiveSection] = useState('hero')
   const [theme, setTheme] = useState('light')
 
   useEffect(() => {
@@ -88,25 +88,27 @@ export default function Navbar({ content = defaultContent }) {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id)
-          }
-        })
-      },
-      { rootMargin: '-40% 0px -55% 0px' }
-    )
+    const ids = ['hero', 'about', 'projects', 'skills', 'journey', 'contact']
+    const sections = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean)
 
-    navLinks.forEach(({ href }) => {
-      const element = document.querySelector(href)
-      if (element) {
-        observer.observe(element)
+    const onScroll = () => {
+      const midpoint = window.scrollY + window.innerHeight * 0.3
+      let current = ids[0]
+
+      for (const section of sections) {
+        if (section.offsetTop <= midpoint) {
+          current = section.id
+        }
       }
-    })
 
-    return () => observer.disconnect()
+      setActiveSection(current)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
   useEffect(() => {
@@ -149,80 +151,82 @@ export default function Navbar({ content = defaultContent }) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? 'border-b border-[color:var(--border)] bg-[var(--soft-bg)]/90 py-3 backdrop-blur-md'
-            : 'bg-transparent py-5'
-        }`}
+        className={`fixed left-0 right-0 top-0 z-50 px-3 transition-all duration-500 ${scrolled ? 'py-3' : 'py-5'}`}
       >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-6">
-          <a
-            href="#hero"
-            className="font-display text-[1.1rem] font-semibold tracking-wide text-[var(--text)] transition-colors duration-300 hover:text-[var(--accent)]"
-          >
-            HK<span className="text-[var(--accent)]">.</span>
-          </a>
+        <div
+          className={`mx-auto max-w-6xl rounded-full border border-[color:var(--border)] bg-[var(--bg)]/80 backdrop-blur transition-all duration-500 ${
+            scrolled ? 'shadow-[var(--card-shadow)]' : 'shadow-none'
+          }`}
+        >
+          <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-3">
+            <a
+              href="#hero"
+              className="font-display text-[1.1rem] font-semibold tracking-wide text-[var(--text)] transition-colors duration-300 hover:text-[var(--accent)]"
+            >
+              HK<span className="text-[var(--accent)]">.</span>
+            </a>
 
-          <ul className="hidden items-center gap-7 md:flex">
-            {navLinks.map(({ index, label, href }) => (
-              <li key={label}>
-                <a
-                  href={href}
-                  className={`group relative flex items-center gap-1.5 font-mono text-xs tracking-wide transition-colors duration-300 ${
-                    activeSection === href.slice(1)
-                      ? 'text-[var(--text)]'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text)]'
-                  }`}
-                >
-                  <span className="text-[10px] text-[var(--text-soft)]">{index}</span>
-                  {label}
-                  <span
-                    className={`absolute -bottom-1.5 left-0 h-px bg-[var(--accent)] transition-all duration-300 ${
-                      activeSection === href.slice(1) ? 'w-full' : 'w-0 group-hover:w-full'
+            <ul className="hidden items-center gap-7 md:flex">
+              {navLinks.map(({ index, label, href }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    className={`group relative flex items-center gap-1.5 font-mono text-xs tracking-wide transition-colors duration-300 ${
+                      activeSection === href.slice(1)
+                        ? 'text-[var(--text)]'
+                        : 'text-[var(--text-soft)] hover:text-[var(--text)]'
                     }`}
-                  />
-                </a>
-              </li>
-            ))}
-          </ul>
+                  >
+                    <span className="text-[10px] text-[var(--text-soft)]">{index}</span>
+                    {label}
+                    <span
+                      className={`absolute -bottom-1.5 left-0 h-px bg-[var(--accent)] transition-all duration-300 ${
+                        activeSection === href.slice(1) ? 'w-full' : 'w-0'
+                      }`}
+                    />
+                  </a>
+                </li>
+              ))}
+            </ul>
 
-          <div className="hidden items-center gap-3 md:flex">
-            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <div className="hidden items-center gap-3 md:flex">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
-            <a
-              href={resume.url}
-              download={resume.fileName}
-              className="inline-flex items-center gap-1.5 rounded-md border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
-            >
-              <ResumeIcon />
-              Resume
-            </a>
+              <a
+                href={resume.url}
+                download={resume.fileName}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+              >
+                <ResumeIcon />
+                Resume
+              </a>
 
-            <a
-              href={emailHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
-            >
-              Say hello
-            </a>
-          </div>
+              <a
+                href={emailHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-4 py-2 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+              >
+                Say hello
+              </a>
+            </div>
 
-          <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <div className="flex items-center gap-2 md:hidden">
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
-            <button
-              type="button"
-              onClick={() => setMobileOpen((value) => !value)}
-              aria-label="Toggle menu"
-              className="flex h-8 w-8 flex-col items-end justify-center gap-1.5"
-            >
-              <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-6 translate-y-[7px] rotate-45' : 'w-6'}`} />
-              <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-4 opacity-0' : 'w-4'}`} />
-              <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-6 -translate-y-[7px] -rotate-45' : 'w-5'}`} />
-            </button>
-          </div>
-        </nav>
+              <button
+                type="button"
+                onClick={() => setMobileOpen((value) => !value)}
+                aria-label="Toggle menu"
+                className="flex h-8 w-8 flex-col items-end justify-center gap-1.5"
+              >
+                <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-6 translate-y-[7px] rotate-45' : 'w-6'}`} />
+                <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-4 opacity-0' : 'w-4'}`} />
+                <span className={`block h-px bg-[var(--text)] transition-all duration-300 ${mobileOpen ? 'w-6 -translate-y-[7px] -rotate-45' : 'w-5'}`} />
+              </button>
+            </div>
+          </nav>
+        </div>
       </motion.header>
 
       <AnimatePresence>
@@ -256,7 +260,7 @@ export default function Navbar({ content = defaultContent }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: navLinks.length * 0.07, duration: 0.4 }}
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[color:var(--border-strong)] hover:text-[var(--text)]"
             >
               <ResumeIcon />
               Resume
@@ -270,7 +274,7 @@ export default function Navbar({ content = defaultContent }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: (navLinks.length + 1) * 0.07, duration: 0.4 }}
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+              className="inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] px-5 py-3 text-sm font-body font-medium text-[var(--text-muted)] transition-all duration-300 hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             >
               Say hello
             </motion.a>

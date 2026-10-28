@@ -1,133 +1,86 @@
-import { motion } from 'framer-motion'
-import AmbientGlow from './AmbientGlow'
-import SectionHeader from './SectionHeader'
-import { useInView } from './useInView'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { useRef } from 'react'
+import SectionDecor from './SectionDecor'
 import { defaultContent } from '../lib/defaultContent'
 
 export default function About({ content = defaultContent.about }) {
   const { paragraphs, traits, availabilityText } = content
-  const [ref, inView] = useInView()
+  const ref = useRef(null)
+
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start 0.95', 'start 0.4'],
+  })
+  const titleOpacity = useTransform(scrollYProgress, [0, 1], [0.28, 1])
+  const lineScale = useTransform(scrollYProgress, [0, 1], [0.15, 1])
+  const short = paragraphs?.[0] || ''
 
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[var(--bg)] py-28 lg:py-36"
+      ref={ref}
+      className="relative scroll-mt-24 overflow-hidden py-24 sm:py-28"
     >
-      <AmbientGlow
-        glows={[
-          {
-            color: 'gold',
-            className: 'right-[-18%] top-8 h-[34rem] w-[34rem]',
-            opacity: 0.1,
-          },
-          {
-            color: 'blue',
-            className: 'bottom-[-24%] left-[-16%] h-[30rem] w-[30rem]',
-            opacity: 0.055,
-          },
-        ]}
-      />
+      <SectionDecor ghost="HARSH" />
 
-      <div ref={ref} className="relative z-10 mx-auto max-w-6xl px-6">
-        <div className="grid items-start gap-16 lg:grid-cols-2">
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--text-soft)]">
+          About
+        </p>
 
-          {/* Left — About */}
-          <div>
+        <motion.h2
+          style={{ opacity: titleOpacity }}
+          className="mt-3 max-w-3xl font-display text-[clamp(1.9rem,5vw,3.25rem)] font-semibold leading-[1.15] tracking-[-0.03em]"
+        >
+          I build useful software — clear, reliable, and worth shipping.
+        </motion.h2>
+
+        <motion.div
+          style={{ scaleX: lineScale, originX: 0 }}
+          className="mt-5 h-[2px] w-16 bg-[var(--accent)]"
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5, delay: 0.05 }}
+          className="mt-6 max-w-xl text-[15px] leading-relaxed text-[var(--text-muted)]"
+        >
+          {short}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[var(--surface)] px-3 py-1.5"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-50" />
+            <span className="relative h-2 w-2 rounded-full bg-[var(--accent)]" />
+          </span>
+          <span className="font-mono text-[11px] text-[var(--text-soft)]">
+            {availabilityText || 'Open to opportunities'} · Pune
+          </span>
+        </motion.div>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-3">
+          {(traits || []).slice(0, 3).map(({ icon, title, desc }, index) => (
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.7,
-                ease: [0.16, 1, 0.3, 1],
-              }}
+              key={title}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.08 * index, duration: 0.45 }}
+              className="rounded-2xl border border-[color:var(--border)] bg-[var(--surface)]/80 p-5 transition hover:-translate-y-1 hover:shadow-[var(--card-shadow-strong)]"
             >
-              <SectionHeader
-                index="01"
-                eyebrow="About"
-                heading="A little about me"
-              />
+              <span className="font-mono text-sm text-[var(--accent)]">{icon}</span>
+              <h3 className="mt-2 text-sm font-medium text-[var(--text)]">{title}</h3>
+              <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--text-muted)]">{desc}</p>
             </motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.7,
-                delay: 0.15,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="mb-6 font-body text-base leading-[1.85] text-[var(--text-muted)]"
-            >
-              {paragraphs[0]}
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{
-                duration: 0.7,
-                delay: 0.25,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="font-body text-base leading-[1.85] text-[var(--text-muted)]"
-            >
-              {paragraphs[1]}
-            </motion.p>
-
-            {/* Availability */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{
-                duration: 0.6,
-                delay: 0.4,
-              }}
-              className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-[color:var(--border)] bg-[var(--surface)] px-4 py-2"
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--gold)] opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--accent)]" />
-              </span>
-
-              <span className="text-xs font-mono tracking-wide text-[var(--text-muted)]">
-                {availabilityText}
-              </span>
-            </motion.div>
-          </div>
-
-          {/* Right — Traits */}
-          <div className="space-y-4">
-            {traits.map(({ icon, title, desc }, index) => (
-              <motion.div
-                key={title}
-                initial={{ opacity: 0, x: 24 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{
-                  duration: 0.6,
-                  delay: 0.1 + index * 0.12,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className="group rounded-lg border border-[color:var(--border)] bg-[var(--surface)]/60 p-6 transition-all duration-300 hover:border-[color:var(--border-strong)] hover:bg-[var(--surface)]"
-              >
-                <div className="flex items-start gap-4">
-                  <span className="mt-0.5 shrink-0 font-mono text-xl text-[var(--gold)]">
-                    {icon}
-                  </span>
-
-                  <div>
-                    <h3 className="mb-1 font-body font-medium text-[var(--text)]">
-                      {title}
-                    </h3>
-
-                    <p className="font-body text-sm leading-relaxed text-[var(--text-muted)]">
-                      {desc}
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-
+          ))}
         </div>
       </div>
     </section>
